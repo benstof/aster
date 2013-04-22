@@ -1,0 +1,811 @@
+unit irricalc;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  ExtCtrls, StdCtrls, Buttons,
+  form2unt,
+  clipbrd,
+  //irrflow2,
+  //irrvar1,
+  //senglo,
+  ComCtrls, Tabnotbk;
+
+type
+  Tcalcbox = class(TForm)
+    box1: TGroupBox;
+    rspoed: TRadioButton;
+    rdiam: TRadioButton;
+    rflow: TRadioButton;
+    flow1: TLabel;
+    diam1: TLabel;
+    spoed1: TLabel;
+    iflow: TEdit;
+    idiam: TEdit;
+    ispoed: TEdit;
+    Bevel2: TBevel;
+    Bevel3: TBevel;
+    Bevel4: TBevel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    flowunt: TLabel;
+    diamunt: TLabel;
+    speedunt: TLabel;
+    flow2: TLabel;
+    diam2: TLabel;
+    speed2: TLabel;
+    GroupBox1: TGroupBox;
+    presbox: TGroupBox;
+    Label6: TLabel;
+    pres1: TRadioButton;
+    pres2: TRadioButton;
+    Panel1: TPanel;
+    Label5: TLabel;
+    Label4: TLabel;
+    startpress: TEdit;
+    endpress: TEdit;
+    GroupBox2: TGroupBox;
+    slope: TEdit;
+    Label7: TLabel;
+    maxloss: TEdit;
+    GroupBox3: TGroupBox;
+    emitflow: TEdit;
+    Label9: TLabel;
+    flowunit: TLabel;
+    regular: TRadioButton;
+    onlyend: TRadioButton;
+    regspas: TEdit;
+    GroupBox4: TGroupBox;
+    book1: TTabbedNotebook;
+    Label8: TLabel;
+    leninput: TEdit;
+    Label10: TLabel;
+    diamresult: TLabel;
+    pipeunit: TLabel;
+    Bevel5: TBevel;
+    Label11: TLabel;
+    diaminput: TEdit;
+    diamunit: TLabel;
+    Label13: TLabel;
+    lenresult: TLabel;
+    Bevel6: TBevel;
+    lossunit: TLabel;
+    regspasunit: TLabel;
+    BitBtn1: TBitBtn;
+    GroupBox5: TGroupBox;
+    Label12: TLabel;
+    pfric: TComboBox;
+    Label14: TLabel;
+    leninput2: TEdit;
+    pipeunit2: TLabel;
+    Label16: TLabel;
+    diaminput2: TEdit;
+    diamunit2: TLabel;
+    Bevel7: TBevel;
+    Label18: TLabel;
+    totalloss: TLabel;
+    Label15: TLabel;
+    Label17: TLabel;
+    totlossunit: TLabel;
+    egain: TLabel;
+    floss: TLabel;
+    Panel2: TPanel;
+    clp: TBitBtn;
+    BitBtn2: TBitBtn;
+    Label19: TLabel;
+    BitBtn3: TBitBtn;
+    Image4: TImage;
+    HelpBtn: TBitBtn;
+    procedure FormActivate(Sender: TObject);
+    procedure rflowClick(Sender: TObject);
+    procedure FormDeactivate(Sender: TObject);
+    procedure iflowChange(Sender: TObject);
+    procedure pres1Click(Sender: TObject);
+    procedure leninputChange(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure pres3Click(Sender: TObject);
+    procedure book1Change(Sender: TObject; NewTab: Integer;
+      var AllowChange: Boolean);
+    procedure clpClick(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure HlpClick(Sender: TObject);
+    procedure HelpBtnClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+     procedure docalc;
+  end;
+
+  unitsobj=object
+        nom,lenunit1,pressunit1,flowunit1,diamunit1 : integer;
+        {nom<0 meen gebruik default unit item}
+        function len_si(ll:real):real;    {mm werk in meters}
+        function press_SI(ll:real):real;   {MM werk in meter water hoogte}
+        function flow_SI(ll:real):real;     {MM werk in l/s}
+        function diam_SI(ll:real):real;
+        function sdr_SI(ll:real):real;    {flow/sec/len = l/s/m}
+        function precip_si(ll:real):real;   {mm werk in mm/h}
+
+        function SI_len(ll:real):real;    {mm werk in meters}
+        function SI_press(ll:real):real;   {MM werk in meter water hoogte}
+        function SI_flow(ll:real):real;     {MM werk in l/s}
+        function SI_diam(ll:real):real;
+        function SI_sdr(ll:real):real;    {l/s/m = flow/sec/len}
+        function si_precip(ll:real):real;
+
+        function press:string;
+        function flow:string;
+        function leng:string;
+        function diam:string;
+        function velo:string;
+        function precip:string;
+    end;
+
+
+
+var
+  calcbox: Tcalcbox;
+
+procedure doirricalc(metric,metflow:boolean);
+
+implementation
+
+//uses PipeSamples, Mainform,taalunt;
+
+
+uses main;
+//uses irriunt;
+
+var units : unitsobj;
+
+{$R *.DFM}
+
+{-------user unit to SI unit-----}
+function unitsobj.press:string;
+begin
+   nom:=pressunit1;
+   case nom of
+   0 : result:='m';
+   1 : result:='ft';
+   2 : result:='Bars';
+   3 : result:='psi';
+   end;
+end;
+function unitsobj.flow:string;
+begin
+   nom:=flowunit1;
+   case nom of
+   0 : result:='l/s';
+   1 : result:='m3/h';
+   2 : result:='gpm';
+   3 : result:='l/h';
+   4 : result:='gph';
+   end;
+end;
+function unitsobj.leng:string;
+begin
+   nom:=lenunit1;
+   case nom of
+   0 : result:='m';
+   1 : result:='ft';
+   end;
+end;
+function unitsobj.velo:string;
+begin
+   result:=leng+'/sec';
+end;
+
+function unitsobj.diam:string;
+begin
+   nom:=diamunit1;
+   case nom of
+   0 : result:='mm';
+   1 : result:='inch';
+   end;
+end;
+
+function unitsobj.precip:string;
+begin
+   nom:=flowunit1;
+   case nom of
+   0,1,3 : result:='mm/h';
+   2 : result:='inch/h';
+   end;
+end;
+
+function unitsobj.len_si(ll:real):real;    {mm werk in meters}
+begin
+   nom:=lenunit1;
+   case nom of
+   0 : result:=ll;           {meters=meters}
+   1 : result:=ll*0.305;     {1 ft =.305 m}
+   end;
+end;
+
+function unitsobj.press_SI(ll:real):real;   {MM werk in meter water hoogte}
+begin
+   nom:=pressunit1;
+   case nom of
+   0 : result:=ll;                    {meter = meter}
+   1 : result:=ll*0.305;              {vt of water .305=meter}
+   2 : result:=ll*10;  //*14.5*2.307*0.305;   {bars to psi to vt to meters}
+   3 : result:=ll*2.307*0.305;        {Psi (2.307) ft of water (.305) to meters}
+   end;
+end;
+function unitsobj.flow_SI(ll:real):real;     {MM werk in l/s}
+begin
+   nom:=flowunit1;
+   case nom of
+   0 : result:=ll;                  {l/s=l/s}
+   1 : result:=ll/0.227/15.852;     {m3/h 264.2 =gpm 0.063 =l/s}
+   2 : result:=ll*0.063;            {GPM 0.063 =l/s}
+   3 : result:=ll/3600;
+   end;
+end;
+function unitsobj.diam_SI(ll:real):real;
+begin
+   nom:=diamunit1;
+   case nom of
+   0 : result:=ll;                  {mm=mm}
+   1 : result:=ll*25.4;             {inch 25.4 = mm}
+   end;
+end;
+function unitsobj.sdr_SI(ll:real):real;    {l/s/m = flow/sec/len}
+begin
+   result:=ll/len_SI(1)*flow_SI(1);
+end;
+
+function unitsobj.precip_SI(ll:real):real;
+begin
+   nom:=flowunit1;
+   case nom of
+   0,1,3 : result:=ll;                  {mm=mm}
+   2     : result:=ll*25.4;             {inch 25.4 = mm}
+   end;
+end;
+
+
+function unitsobj.SI_len(ll:real):real;    {mm werk in meters}
+begin
+   nom:=lenunit1;
+   case nom of
+   0 : result:=ll;           {meters=meters}
+   1 : result:=ll/0.305;     {1 ft =.305 m}
+   end;
+end;
+function unitsobj.SI_press(ll:real):real;   {MM werk in meter water hoogte}
+begin
+   nom:=pressunit1;
+   case nom of
+   0 : result:=ll;                    {meter = meter}
+   1 : result:=ll/0.305;              {vt of water .305=meter}
+   2 : result:=ll/10; // /14.5/2.307/0.305;   {bars to psi to vt to meters}
+   3 : result:=ll/2.307/0.305;        {Psi (2.307) ft of water (.305) to meters}
+   end;
+end;
+function unitsobj.SI_flow(ll:real):real;     {MM werk in l/s}
+begin
+   nom:=flowunit1;
+   case nom of
+   0 : result:=ll;                  {l/s=l/s}
+   1 : result:=ll*15.852*0.227;      {m3/h 264.2 =gpm 0.063 =l/s}
+   2 : result:=ll/0.063;            {GPM 0.063 =l/s}
+   3 : result:=ll*3600;
+   4 : result:=ll/0.063*60;         {gph}
+   end;
+end;
+function unitsobj.SI_diam(ll:real):real;
+begin
+   nom:=diamunit1;
+   case nom of
+   0 : result:=ll;                  {mm=mm}
+   1 : result:=ll/25.4;             {inch 25.4 = mm}
+   end;
+end;
+function unitsobj.SI_sdr(ll:real):real;    {l/s/m = flow/sec/len}
+begin
+   result:=ll/si_len(1)*si_flow(1);
+end;
+function unitsobj.SI_precip(ll:real):real;
+begin
+   nom:=flowunit1;
+   case nom of
+   0,1,3 : result:=ll;                  {mm=mm}
+   2     : result:=ll/25.4;             {inch 25.4 = mm}
+   end;
+end;
+{===================}
+
+
+//============
+
+function mag(a1,a2:real):real;        {X^Y     a1^a2}
+begin
+   result:=0;
+
+   if a1<>0 then result:=exp(a2*ln(a1));
+end;
+
+function hazen(L,q,d,C,dw:real):real;    {Hazen Williams   met variables}
+var v,tp,diamm,re,f:real;
+begin
+   result:=0;
+   if c=0 then c:=150;  {plastic}
+          {hazen will}
+                   {friction in pipe + z2-z1 diff}
+   if q/c>0.000000000001 then
+      result:={1050}1.212e12*mag(Q/C,1.852)*mag(D,-4.87);
+   result:=result*L/100;
+end;
+
+
+
+procedure Tcalcbox.docalc;
+var flow_,diam_,spoed_,area,rad : real;
+    f,ww : integer;
+begin
+
+   
+
+   ww:=1;
+   if rdiam.checked then ww:=2;
+   if rspoed.checked then ww:=3;
+
+   val(iflow.text,flow_,f);
+   flow_:=units.flow_si(flow_)/1000;
+   val(idiam.text,diam_,f);
+   diam_:=units.diam_si(diam_);
+   area:=sqr(diam_/2)*pi/(1000*1000);
+
+   val(ispoed.text,spoed_,f);
+   spoed_:=units.len_si(spoed_);
+   flow1.caption:=iflow.text;
+   diam1.caption:=idiam.text;
+   spoed1.caption:=ispoed.text;
+   case ww of
+      1 : begin
+             flow1.caption:=rtostr(units.si_flow(spoed_*area*1000),10,2); //m3/s>l/s
+          end;
+      2 : begin
+             if spoed_>0 then
+             begin
+                area:=flow_/spoed_; rad:=sqrt(area/pi)*1000*2;   //m>mm
+                diam1.caption:=rtostr(units.si_diam(rad),10,2);
+             end;
+          end;
+      3 : begin
+             if area>0 then
+             begin
+                rad:=flow_/area;       //m3/s /m2  =m/s
+                spoed1.caption:=rtostr(units.si_len(rad),10,2);
+             end;
+          end;
+
+   end;
+end;
+
+
+procedure doirricalc(metric,metflow:boolean);
+begin
+   Application.CreateForm(Tcalcbox,calcbox);
+   with calcbox do
+   begin
+      //caption:=pnaam;
+      with units do
+      begin
+         lenunit1:=1;
+         pressunit1:=3;
+         flowunit1:=2;
+         diamunit1:=1;
+         if metric then
+         begin
+            lenunit1:=0;
+            pressunit1:=2;
+            flowunit1:=0;
+            diamunit1:=0;
+            if metflow then
+              flowunit1:=3;
+         end;
+      end;
+
+      showmodal;
+      release;
+      //pipeForm.visible:=false;
+   end;
+end;
+
+procedure Tcalcbox.FormActivate(Sender: TObject);
+begin
+
+  // top:=Get_Top;
+  // left:=Get_left;
+
+   with waarde do
+   begin
+      panel2.left:=8;
+      panel2.top:=20;
+      panel2.visible:=false;
+      book1.pageindex:=0;
+
+      pfric.text:=readstring('Irricalc','Pfric','145');
+      iflow.text:=readstring('Irricalc','Iflow','0');
+      idiam.text:=readstring('Irricalc','Idiam','0');
+      ispoed.text:=readstring('Irricalc','Ispeed','0');
+      case readint('Irricalc','Calc1',1) of
+      1 : rflow.checked:=true;
+      2 : rdiam.checked:=true;
+      3 : rspoed.checked:=true;
+      end;
+
+      startpress.text:=readstring('Irricalc','Startpress','50');
+      endpress.text:=readstring('Irricalc','Endpress','40');
+      maxloss.text:=readstring('Irricalc','Maxloss','20');
+
+      label19.visible:=false;
+
+      emitflow.text:=readstring('Irricalc','Emitflow','2');
+      //leninputChange(Sender);
+
+      regspas.text:=readstring('Irricalc','Regspas','2');
+      slope.text:=readstring('Irricalc','Slope','0');
+      leninput.text:=readstring('Irricalc','Leninput','25');
+      diaminput.text:=readstring('Irricalc','Pipeinput','100');
+      leninput2.text:=leninput.text;
+      diaminput2.text:=diaminput.text;
+
+
+      case readint('Irricalc','Pressures',1) of
+      1 : pres1.checked:=true;
+      2 : pres2.checked:=true;
+      end;
+
+      if readint('Irricalc','Emitplace',1)=1 then
+         regular.checked:=true
+      else
+         onlyend.checked:=true;
+
+   end;
+   flowunt.caption:=units.flow;
+   flowunit.caption:=units.flow;
+   diamunt.caption:=units.diam;
+   speedunt.caption:=units.velo;
+   flow2.caption:=flowunt.caption;
+   diam2.caption:=diamunt.caption;
+   diamunit.caption:=diamunt.caption;
+   diamunit2.caption:=diamunt.caption;
+   speed2.caption:=speedunt.caption;
+   pipeunit.caption:=units.leng;
+   pipeunit2.caption:=units.leng;
+   regspasunit.caption:=units.leng;
+
+   lossunit.caption:=units.press;
+   totlossunit.caption:=units.press;
+   presbox.caption:='Pressures ('+units.press+')';
+
+   rflowclick(sender);
+
+  
+
+end;
+
+procedure Tcalcbox.FormCreate(Sender: TObject);
+var j : integer;
+begin
+   for j:=0 to ComponentCount-1 do
+      MMLAng.getname(components[j]);
+end;
+
+procedure Tcalcbox.rflowClick(Sender: TObject);
+var j : integer;
+begin
+   j:=1;
+   if rdiam.checked then j:=2;
+   if rspoed.checked then j:=3;
+
+   iflow.visible:=j<>1;
+   idiam.visible:=j<>2;
+   ispoed.visible:=j<>3;
+   //flow1.visible:=j=1;
+   //diam1.visible:=j=2;
+   //spoed1.visible:=j=3;
+   docalc;
+end;
+
+procedure Tcalcbox.FormDeactivate(Sender: TObject);
+var j : integer;
+begin
+   //pipeForm.visible:=false;
+   with waarde do
+   begin
+      writestring('Irricalc','Pfric',pfric.text);
+      writestring('Irricalc','Iflow',iflow.text);
+      writestring('Irricalc','Idiam',idiam.text);
+      writestring('Irricalc','Ispeed',ispoed.text);
+      if rflow.checked then writeint('Irricalc','Calc1',1);
+      if rdiam.checked then writeint('Irricalc','Calc1',2);
+      if rspoed.checked then writeint('Irricalc','Calc1',3);
+
+      writestring('Irricalc','Startpress',startpress.text);
+      writestring('Irricalc','Endpress',endpress.text);
+      writestring('Irricalc','Maxloss',maxloss.text);
+      writestring('Irricalc','Emitflow',emitflow.text);
+      writestring('Irricalc','Regspas',regspas.text);
+      writestring('Irricalc','Slope',slope.text);
+      writestring('Irricalc','Leninput',leninput.text);
+      writestring('Irricalc','Pipeinput',diaminput.text);
+
+      j:=3;
+      if pres1.checked then j:=1 else
+      if pres2.checked then j:=2;
+
+      writeint('Irricalc','Pressures',j);
+      
+      if regular.checked then j:=1 else j:=2;
+      writeint('Irricalc','Emitplace',j);
+   end;
+end;
+
+procedure Tcalcbox.iflowChange(Sender: TObject);
+begin
+   docalc;
+end;
+
+procedure Tcalcbox.pres1Click(Sender: TObject);
+begin
+   panel1.visible:=pres1.checked;
+   leninputChange(Sender);
+end;
+
+procedure Tcalcbox.leninputChange(Sender: TObject);
+begin
+   diamresult.caption:='?';
+   lenresult.caption:='?';
+   egain.caption:='?';
+   floss.caption:='?';
+   totalloss.caption:='?';
+
+
+   if {mining1 and} (main.metric1.checked) then
+   begin
+   //   label19.caption:=rtostr( strtor(emitflow.text)*3600,10,1)+'l/h';
+   //   label19.visible:=true;
+   end;
+end;
+
+procedure Tcalcbox.BitBtn1Click(Sender: TObject);
+var maxlos,p1,p2 : real;
+    slopee,lank,losses,flow : real;
+    emitval,emitspas,diam,pf : real;
+    f : integer;
+    dar,stop : boolean;
+begin
+   dar:=false; //irribox._darcy;
+   //irribox._darcy:=false;
+
+   val(startpress.text,p1,f);  p1:=units.press_si(p1);
+   val(endpress.text,p2,f);    p2:=units.press_si(p2);
+   pf:=strtor(pfric.text);
+
+   maxlos:=p1-p2;
+   if pres2.checked then
+   begin
+      val(maxloss.text,p1,f);
+      maxlos:=units.press_si(p1);
+   end;
+   val(slope.text,slopee,f);
+   val(emitflow.text,emitval,f);  emitval:=units.flow_si(emitval);
+   emitspas:=0;
+   if regular.checked then
+   begin
+      val(regspas.text,emitspas,f);
+      emitspas:=units.len_si(emitspas);
+   end;
+   val(diaminput.text,diam,f);  diam:=units.diam_si(diam);
+   val(leninput.text,lank,f);   lank:=units.len_si(lank);
+
+   case book1.pageindex of
+   0 : begin          //max pipe len
+                 lank:=0.5;
+
+          if emitspas>0 then lank:=emitspas;
+
+          stop:=false;
+          flow:=emitval;
+          losses:=0;
+          repeat
+             if emitspas>0 then
+             begin
+                p1:=hazen(emitspas,flow,diam,pf,0.01);
+                losses:=losses+p1;
+             end
+             else
+                losses:=hazen(lank,flow,diam,pf,0.01);
+             if losses-lank*slopee/100>maxlos then
+             begin
+                stop:=true;
+                if emitspas>0 then
+                   lank:=lank-emitspas
+                else
+                   lank:=lank-0.25;
+             end
+             else
+             begin
+                if emitspas>0 then
+                   lank:=lank+emitspas
+                else
+                   lank:=lank+0.25;
+             end;
+             if emitspas>0 then
+                flow:=(trunc(lank/emitspas))*emitval;
+
+          until stop or (lank>200000);
+          lenresult.caption:=rtostr(units.si_len(lank),10,2)+' '+units.leng;
+       end;
+   1 : begin          //pipe diam
+            diam:=1;
+          losses:=0;
+          stop:=false;
+          repeat
+             flow:=emitval;
+             if emitspas>0 then
+             begin
+                p2:=emitspas;
+                losses:=0;
+                while p2<lank do
+                begin
+                   flow:=(trunc(p2/emitspas)+1)*emitval;
+                   p1:=hazen(emitspas,flow,diam,pf,0.01);
+                   losses:=losses+p1;
+                   p2:=p2+emitspas;
+                end;
+             end
+             else
+                losses:=hazen(lank,flow,diam,pf,0.01);
+             if losses-lank*slopee/100>maxlos then
+                 diam:=diam+0.1
+             else
+             begin
+                stop:=true;
+                //if diam>1 then diam:=diam-0.1;
+             end;
+          until stop or (diam>2000);
+          diamresult.caption:=rtostr(units.si_diam(diam),10,2)+' '+units.diam;
+       end;
+   2 : begin          //pipe fric
+          diam:=10;
+          losses:=0;
+          val(diaminput2.text,diam,f);  diam:=units.diam_si(diam);
+          val(leninput2.text,lank,f);   lank:=units.len_si(lank);
+             flow:=emitval;
+             if emitspas>0 then
+             begin
+                p2:=emitspas;
+                losses:=0;
+                while p2<lank do
+                begin
+                   flow:=(trunc(p2/emitspas)+1)*emitval;
+                   p1:=hazen(emitspas,flow,diam,pf,0.01);
+                   losses:=losses+p1;
+                   p2:=p2+emitspas;
+                end;
+             end
+             else
+                losses:=hazen(lank,flow,diam,pf,0.01);
+             slopee:=lank*slopee/100;
+          if slopee>0 then
+             label18.caption:='Elevation gain'
+             else
+             label18.caption:='Elevation loss';
+          egain.caption:='= '+rtostr(units.si_press(slopee),10,2);
+          floss.caption:='= '+rtostr(units.si_press(-losses),10,2);
+
+          if -losses+slopee>0 then
+             label17.caption:='Total gain'
+             else
+             label17.caption:='Total loss';
+          totalloss.caption:='= '+rtostr(units.si_press(-losses+slopee),10,2);
+       end;
+   end;
+   rspoed.checked:=true;
+   iflow.text:=rtostr(units.si_flow(flow),10,2);
+   idiam.text:=rtostr(units.si_diam(diam),10,2);
+   //irribox._darcy:=dar;
+end;
+
+procedure Tcalcbox.pres3Click(Sender: TObject);
+begin
+   book1.pageindex:=2;
+end;
+
+procedure Tcalcbox.book1Change(Sender: TObject; NewTab: Integer;
+  var AllowChange: Boolean);
+begin
+   panel2.visible:=newtab=2;
+end;
+
+procedure Tcalcbox.clpClick(Sender: TObject);
+var x1,y1,x2,y2,t : integer;
+    bm : tbitmap;
+    tr,tr1 : trect;
+begin
+   clp.visible:=false;
+   //hlp.visible:=false;
+   //clo.visible:=false;
+
+   bm:=tbitmap.create;
+   with calcbox do
+   begin
+      bm.height:=height;
+      bm.width:=width;
+      tr1.left:=-3;
+      tr1.right:=width-4;
+      tr1.top:=-21;
+      tr1.bottom:=height-23;
+      tr.left:=0;
+      tr.right:=bm.width;
+      tr.top:=0;
+      tr.bottom:=bm.height;
+   end;
+   bm.canvas.copyrect(tr,calcbox.canvas,tr1);  //tr1);
+   clipboard.assign(bm);
+   bm.free;
+   clp.visible:=true;
+   //hlp.visible:=true;
+   //clo.visible:=true;
+
+
+end;
+
+procedure Tcalcbox.BitBtn2Click(Sender: TObject);
+begin
+
+   with PipeForm do
+   begin
+      left:=calcbox.left+calcbox.width;
+      top:=calcbox.top;
+      show;
+   end;   
+end;
+
+procedure Tcalcbox.HlpClick(Sender: TObject);
+begin
+   Application.HelpCommand(HELP_CONTEXT, (sender as tbitbtn).helpcontext);
+end;
+
+procedure Tcalcbox.HelpBtnClick(Sender: TObject);
+begin
+   Application.HelpCommand(HELP_CONTEXT, (sender as tbitbtn).helpcontext);
+end;
+
+end.
+
+
+lank:=0.5;
+          stop:=false;
+          flow:=emitval;
+          losses:=0;
+          repeat
+             if emitspas>0 then
+             begin
+                p1:=hazen(0.5,flow,diam,pf,0.01);
+                losses:=losses+p1;
+             end
+             else
+                losses:=hazen(lank,flow,diam,pf,0.01);
+             if losses-lank*slopee/100>maxlos then
+             begin
+                stop:=true;
+                lank:=lank-0.25;
+             end
+             else
+                lank:=lank+0.25;
+             if emitspas>0 then
+                flow:=(trunc(lank/emitspas)+1)*emitval;
+          until stop or (lank>20000);
+          lenresult.caption:=rtostr(units.si_len(lank),10,2)+' '+units.leng;
+
+

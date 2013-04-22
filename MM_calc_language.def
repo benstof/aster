@@ -1,0 +1,190 @@
+@Emitter information
+Emitter info
+@
+
+@Coefficient of variation  CV (%)
+Coefficient of variation  CV (%)
+@Maximum allowed pressure (bar).
+Maximum allowed pressure (bar).
+@pipeunit
+pipeunit
+@-----
+-----
+@flowunit
+flowunit
+@Calculated flow @
+Calculated flow @
+@Flow equation coefficient (&x)
+Flow equation coefficient (&x)
+@Flow equation constant &K  (Q=K * P^x)
+Flow equation constant &K  (Q=K * P^x)
+@Pipe Diameter
+Pipe Diameter
+@Spacing options
+Spacing options
+@Correction % factor (+ -)
+Correction % factor (+ -)
+@Kd factor (emitter friction)
+Kd factor (emitter friction)
+@Hazen Williams C value
+Hazen Williams C value
+@l/h
+l/h
+@-------
+-------
+@Minimum set @
+Minimum set @
+@max_bar_lbl
+max_bar_lbl
+@Label1
+Label1
+@bar
+bar
+@spacing_unt_lbl
+spacing_unt_lbl
+@Products
+Products
+@www.IrriMaker.com
+www.IrriMaker.com
+@Calculate
+Calculate
+@The Hazen-Williams roughness factor for the pipe
+The Hazen-Williams roughness factor for the pipe
+@Header
+Header
+@Footer
+Footer
+@Printer
+Printer
+@Print to Printer
+Print to Printer
+@Printer S&etup
+Printer S&etup
+@Excel
+Excel
+@After copying the data, open Excel and then Paste the contents.
+After copying the data, open Excel and then Paste the contents.
+@Data copied to Clipboard
+Data copied to Clipboard
+@            Copy to ClipBoard
+            Copy to ClipBoard
+@Output as comma (,) decimal format
+Output as comma (,) decimal format
+@Include Emitter Information
+Include Emitter Information
+@Plot
+Plot
+@Pressure
+Pressure
+@Slope
+Slope
+@Show Graphs
+Show Graphs
+@Regular
+Regular
+@EU Limits
+EU Limits
+@Flow Var
+Flow Var
+@&Settings
+&Settings
+@Manage Emitters
+Manage Emitters
+@Manage Pipes
+Manage Pipes
+@Manage Driplines
+Manage Driplines
+@-
+-
+@Alternate Language
+Alternate Language
+@&Units
+&Units
+@English
+English
+@Metric
+Metric
+@Flow=l/s
+Flow=l/s
+@Flow=l/h
+Flow=l/h
+@&Calculator
+&Calculator
+@mm
+mm
+@(cm)
+(cm)
+@Pressione
+Pressione
+@&Impostazioni
+&Impostazioni
+@&Manage Emitters
+&Manage Emitters
+@M&anage Pipes
+M&anage Pipes
+@Ma&nage Driplines
+Ma&nage Driplines
+@A&lternatiewe Taal
+A&lternatiewe Taal
+@&Unita
+&Unita
+@Password
+Password
+@Ok
+Ok
+@Name
+Name
+@CV
+CV
+@KD
+KD
+@Max Pressure
+Max Pressure
+@Min Pressure
+Min Pressure
+@Constant
+Constant
+@Correction
+Correction
+@Hazen W
+Hazen W
+@limits
+limits
+@Save
+Save
+@Delete
+Delete
+@New
+New
+@Emitters
+Emitters
+@Pipes
+Pipes
+@DripLines
+DripLines
+@DripLine Info
+DripLine Information
+@Add
+Add
+@Diameter (ID)
+Diameter (ID)
+@Emitter information
+Emitter information
+@DripLine Info
+DripLine Info
+@A&lternate Language
+A&lternate Language
+@Calculate limits by
+Calculatetest
+@Compensated
+Compensated
+@Results
+Restest
+@Output
+Outtest
+@Losses
+Lostest
+@Flow=l/m
+Flow=l/m
+@DripLine Information
+DripLine Information

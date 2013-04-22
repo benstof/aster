@@ -1,0 +1,209 @@
+unit taal_unt;
+
+interface
+
+uses   Messages, SysUtils, Variants, Classes,  vcl.Graphics, Controls,
+   vcl.Dialogs, StdCtrls,buttons,tabnotbk,cxButtons,spin,ExtCtrls;
+
+type
+  MMlangobj =object
+     fname : shortstring;
+     ff,ff2 : text;
+
+     tx11 : string;
+
+     function openfile : boolean;
+     procedure close;
+
+     function GetText(TC : String) : string;
+     procedure GetName(TC : TComponent);
+     procedure initlang(nn:shortstring);
+     function getlang(tx1 : string) : boolean;
+  end;
+
+{===========================================================================}
+
+var
+  mmLang : MMlangobj;
+
+implementation
+
+function MMlangobj.getlang(tx1 : string) : boolean;
+var ss,ss2,s3,s4,ss_,ss2_,blank : Shortstring;
+    j,i,p : integer;
+begin
+
+   result:=false;
+
+   MMlang.openfile;
+
+   tx11:=tx1;
+
+   j:=length(tx1);
+   p:=0;
+   for i:=j downto 1 do
+      if (tx1[i]<>' ') and (p=0) then p:=i;
+   s3:='';
+   for i:=1 to p do s3:=s3+tx1[i];
+
+   while not eof(ff) do
+   begin
+      readLn(ff,ss);
+      readLn(ff,ss2);
+
+      if (ss='@'+s3) or (ss2=s3) then
+      begin
+         result:=true;
+         tx11:=ss2;
+         break;
+      end;
+   end;
+
+   if not result then
+   begin
+      reset(ff);
+      assignfile(ff2,'Translate2.dat');
+      rewrite(ff2);
+
+      while not eof(ff) do
+      begin
+         readln(ff,ss); writeln(ff2,ss);
+      end;
+      writeln(ff2,'@'+s3);
+      writeln(ff2,s3);
+
+      closefile(ff2);
+
+      MMlang.close;
+      deletefile(MMlang.fname);
+      renameFile('Translate2.dat',MMLang.Fname);
+
+   end;
+
+   MMlang.close;
+end;
+
+function MMlangobj.openfile : boolean;
+begin
+   assignfile(ff,fname);
+   {$i-}
+      reset(ff);
+   {$i+}
+   if ioresult<>0 then
+   begin
+      rewrite(ff);
+      reset(ff);
+   end;
+   result:=true;
+end;
+
+procedure MMlangobj.close;
+var i : integer;
+begin
+   {$i-}
+   closefile(ff);
+   {$i+}
+   i:=ioresult;
+end;
+
+procedure MMlangobj.initlang(nn:shortstring);
+begin
+   MMlang.fname:=nn;
+end;
+
+function MMLangObj.GetText(TC : String) : string;
+begin
+   result:=tc;
+   if MMLang.getlang(Tc) then
+         Result:=MMLang.tx11;
+end;
+
+procedure MMLangObj.GetName(TC : TComponent);
+var tcomp : TComponent;
+    j : integer;
+begin
+   tcomp:=(TC as tcomponent);
+
+   if tcomp.ClassType=tcxbutton then
+   begin
+      if MMLang.getlang((tcomp as tcxbutton).Caption) then
+         (tcomp as tcxbutton).caption:=MMLang.tx11;
+      if MMLang.getlang((tcomp as tcxbutton).Hint) then
+         (tcomp as tcxbutton).Hint:=MMLang.tx11;
+   end;
+
+   if tcomp.ClassType=tspinedit then
+   begin
+      if MMLang.getlang((tcomp as tspinedit).Hint) then
+         (tcomp as tspinedit).Hint:=MMLang.tx11;
+   end;
+
+   if tcomp.ClassType=tpanel then
+   begin
+      if MMLang.getlang((tcomp as tpanel).Caption) then
+         (tcomp as tpanel).caption:=MMLang.tx11;
+      if MMLang.getlang((tcomp as tpanel).Hint) then
+         (tcomp as tpanel).Hint:=MMLang.tx11;
+   end;
+
+   if tcomp.ClassType=tcombobox then
+   begin
+      if MMLang.getlang((tcomp as tcombobox).Hint) then
+         (tcomp as tcombobox).Hint:=MMLang.tx11;
+   end;
+
+   if tcomp.ClassType=tlistbox then
+   begin
+      if MMLang.getlang((tcomp as tlistbox).Hint) then
+         (tcomp as tlistbox).Hint:=MMLang.tx11;
+   end;
+
+   if tcomp.ClassType=tlabel then
+   begin
+      if MMLang.getlang((tcomp as tlabel).Caption) then
+         (tcomp as tlabel).caption:=MMLang.tx11;
+      if MMLang.getlang((tcomp as tlabel).Hint) then
+         (tcomp as tlabel).Hint:=MMLang.tx11;
+   end;
+
+   if tcomp.ClassType=tbutton then
+   begin
+      if MMLang.getlang((tcomp as tbutton).Caption) then
+         (tcomp as tbutton).caption:=MMLang.tx11;
+      if MMLang.getlang((tcomp as tbutton).Hint) then
+         (tcomp as tbutton).Hint:=MMLang.tx11;
+   end;
+
+   if tcomp.ClassType=tcheckbox then
+   begin
+      if MMLang.getlang((tcomp as tcheckbox).Caption) then
+         (tcomp as tcheckbox).caption:=MMLang.tx11;
+      if MMLang.getlang((tcomp as tcheckbox).Hint) then
+         (tcomp as tcheckbox).Hint:=MMLang.tx11;
+   end;
+
+   if tcomp.ClassType=tbitbtn then
+   begin
+      if MMLang.getlang((tcomp as tbitbtn).Caption) then
+         (tcomp as tbitbtn).caption:=MMLang.tx11;
+      if MMLang.getlang((tcomp as tbitbtn).Hint) then
+         (tcomp as tbitbtn).Hint:=MMLang.tx11;
+   end;
+
+   if tcomp.ClassType=tgroupbox then
+   begin
+      if MMLang.getlang((tcomp as tgroupbox).Caption) then
+         (tcomp as tgroupbox).caption:=MMLang.tx11;
+      if MMLang.getlang((tcomp as tgroupbox).Hint) then
+         (tcomp as tgroupbox).Hint:=MMLang.tx11;
+   end;
+
+   if tcomp.ClassType=TTabbedNotebook then
+   begin
+      for j:=0 to (tcomp as TTabbedNotebook).pages.Count-1 do
+         (tcomp as TTabbedNotebook).pages[j]:=MMLAng.getText((tcomp as TTabbedNotebook).pages[j]);
+   end;
+
+end;
+
+end.

@@ -1,0 +1,183 @@
+unit units_unt;
+
+interface
+
+type
+
+unitsobj=object
+        nom,lenunit1,pressunit1,flowunit1,diamunit1 : integer;
+        {nom<0 meen gebruik default unit item}
+        function len_si(ll:real):real;    {mm werk in meters}
+        function press_SI(ll:real):real;   {MM werk in meter water hoogte}
+        function flow_SI(ll:real):real;     {MM werk in l/s}
+        function diam_SI(ll:real):real;
+        function sdr_SI(ll:real):real;    {flow/sec/len = l/s/m}
+        function precip_si(ll:real):real;   {mm werk in mm/h}
+
+        function SI_len(ll:real):real;    {mm werk in meters}
+        function SI_press(ll:real):real;   {MM werk in meter water hoogte}
+        function SI_flow(ll:real):real;     {MM werk in l/s}
+        function SI_diam(ll:real):real;
+        function SI_sdr(ll:real):real;    {l/s/m = flow/sec/len}
+        function si_precip(ll:real):real;
+
+        function press:string;
+        function flow:string;
+        function leng:string;
+        function diam:string;
+        function velo:string;
+        function precip:string;
+    end;
+
+implementation
+
+
+{-------user unit to SI unit-----}
+function unitsobj.press:string;
+begin
+   nom:=pressunit1;
+   case nom of
+   0 : result:='m';
+   1 : result:='ft';
+   2 : result:='Bars';
+   3 : result:='psi';
+   end;
+end;
+function unitsobj.flow:string;
+begin
+   nom:=flowunit1;
+   case nom of
+   0 : result:='l/s';
+   1 : result:='m3/h';
+   2 : result:='gpm';
+   3 : result:='l/h';
+   4 : result:='gph';
+   end;
+end;
+function unitsobj.leng:string;
+begin
+   nom:=lenunit1;
+   case nom of
+   0 : result:='m';
+   1 : result:='ft';
+   end;
+end;
+function unitsobj.velo:string;
+begin
+   result:=leng+'/sec';
+end;
+function unitsobj.diam:string;
+begin
+   nom:=diamunit1;
+   case nom of
+   0 : result:='mm';
+   1 : result:='inch';
+   end;
+end;
+function unitsobj.precip:string;
+begin
+   nom:=flowunit1;
+   case nom of
+   0,1,3 : result:='mm/h';
+   2 : result:='inch/h';
+   end;
+end;
+function unitsobj.len_si(ll:real):real;    {mm werk in meters}
+begin
+   nom:=lenunit1;
+   case nom of
+   0 : result:=ll;           {meters=meters}
+   1 : result:=ll*0.305;     {1 ft =.305 m}
+   end;
+end;
+function unitsobj.press_SI(ll:real):real;   {MM werk in meter water hoogte}
+begin
+   nom:=pressunit1;
+   case nom of
+   0 : result:=ll;                    {meter = meter}
+   1 : result:=ll*0.305;              {vt of water .305=meter}
+   2 : result:=ll*10;  //*14.5*2.307*0.305;   {bars to psi to vt to meters}
+   3 : result:=ll*2.307*0.305;        {Psi (2.307) ft of water (.305) to meters}
+   end;
+end;
+function unitsobj.flow_SI(ll:real):real;     {MM werk in l/s}
+begin
+   nom:=flowunit1;
+   case nom of
+   0 : result:=ll;                  {l/s=l/s}
+   1 : result:=ll/0.227/15.852;     {m3/h 264.2 =gpm 0.063 =l/s}
+   2 : result:=ll*0.063;            {GPM 0.063 =l/s}
+   3 : result:=ll/3600;
+   end;
+end;
+function unitsobj.diam_SI(ll:real):real;
+begin
+   nom:=diamunit1;
+   case nom of
+   0 : result:=ll;                  {mm=mm}
+   1 : result:=ll*25.4;             {inch 25.4 = mm}
+   end;
+end;
+function unitsobj.sdr_SI(ll:real):real;    {l/s/m = flow/sec/len}
+begin
+   result:=ll/len_SI(1)*flow_SI(1);
+end;
+function unitsobj.precip_SI(ll:real):real;
+begin
+   nom:=flowunit1;
+   case nom of
+   0,1,3 : result:=ll;                  {mm=mm}
+   2     : result:=ll*25.4;             {inch 25.4 = mm}
+   end;
+end;
+function unitsobj.SI_len(ll:real):real;    {mm werk in meters}
+begin
+   nom:=lenunit1;
+   case nom of
+   0 : result:=ll;           {meters=meters}
+   1 : result:=ll/0.305;     {1 ft =.305 m}
+   end;
+end;
+function unitsobj.SI_press(ll:real):real;   {MM werk in meter water hoogte}
+begin
+   nom:=pressunit1;
+   case nom of
+   0 : result:=ll;                    {meter = meter}
+   1 : result:=ll/0.305;              {vt of water .305=meter}
+   2 : result:=ll/10; // /14.5/2.307/0.305;   {bars to psi to vt to meters}
+   3 : result:=ll/2.307/0.305;        {Psi (2.307) ft of water (.305) to meters}
+   end;
+end;
+function unitsobj.SI_flow(ll:real):real;     {MM werk in l/s}
+begin
+   nom:=flowunit1;
+   case nom of
+   0 : result:=ll;                  {l/s=l/s}
+   1 : result:=ll*15.852*0.227;      {m3/h 264.2 =gpm 0.063 =l/s}
+   2 : result:=ll/0.063;            {GPM 0.063 =l/s}
+   3 : result:=ll*3600;
+   4 : result:=ll/0.063*60;         {gph}
+   end;
+end;
+function unitsobj.SI_diam(ll:real):real;
+begin
+   nom:=diamunit1;
+   case nom of
+   0 : result:=ll;                  {mm=mm}
+   1 : result:=ll/25.4;             {inch 25.4 = mm}
+   end;
+end;
+function unitsobj.SI_sdr(ll:real):real;    {l/s/m = flow/sec/len}
+begin
+   result:=ll/si_len(1)*si_flow(1);
+end;
+function unitsobj.SI_precip(ll:real):real;
+begin
+   nom:=flowunit1;
+   case nom of
+   0,1,3 : result:=ll;                  {mm=mm}
+   2     : result:=ll/25.4;             {inch 25.4 = mm}
+   end;
+end;
+
+end.

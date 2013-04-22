@@ -1,0 +1,86 @@
+unit translate_unt;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, taal_unt, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Edit1: TEdit;
+    Edit2: TEdit;
+
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  trans_file : File;
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormActivate(Sender: TObject);
+var ss,ss2,s3,s4,ss_,ss2_,blank : Shortstring;
+    j,i,p : integer;
+begin
+
+   MMlang.openfile;
+
+
+   while not eof(MMlang.ff) do
+   begin
+      readLn(MMlang.ff,ss);
+      readLn(MMlang.ff,ss2);
+
+         // To alternate language
+         if (ss='@'+s3) then
+         begin
+            {result:=true;
+            tx11:=ss2;}
+            edit1.Text := ss2;
+            break;
+         end;
+
+         // To original language
+         if (ss2=s3) then
+         begin
+            {result:=true;
+            ss := RightStr(ss,length(ss) - 1);
+            tx11:=ss; }
+            edit2.Text := ss;
+            break;
+         end;
+
+   end;
+
+  { if not result then
+   begin
+      reset(ff);
+      assignfile(ff2,'Translate2.dat');
+      rewrite(ff2);
+
+      while not eof(ff) do
+      begin
+         readln(ff,ss);
+         writeln(ff2,ss);
+      end;
+      writeln(ff2,'@'+s3);
+      writeln(ff2,s3);
+
+      closefile(ff2);
+
+      MMlang.close;
+      deletefile(MMlang.fname);
+      renameFile('Translate2.dat',MMLang.Fname);
+   end;    }
+
+
+end;
+
+end.

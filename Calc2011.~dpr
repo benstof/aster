@@ -1,0 +1,13 @@
+program Calc2011;
+
+uses
+  Forms,
+  irricalc in 'irricalc.pas' {calcbox};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(Tcalcbox, calcbox);
+  Application.Run;
+end.

@@ -1,0 +1,493 @@
+unit translate_unt;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, taal_unt, Vcl.StdCtrls, cxGraphics,
+  cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxScrollBox, Vcl.ComCtrls,
+  Vcl.Buttons, Vcl.ImgList;
+
+type
+  TForm1 = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    ImageList1: TImageList;
+    ScrollBox1: TScrollBox;
+    dripline_lb: TListBox;
+    Button2: TButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Button1: TButton;
+    dl_memo: TMemo;
+    dl_memo_trans: TMemo;
+    Button3: TButton;
+    Label1: TLabel;
+    Label2: TLabel;
+
+    procedure FormActivate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure OnButtonClick(Sender : TObject);
+    procedure load_driplines;
+    procedure dripline_lbClick(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+ type
+
+   TDripline = Record
+     id : integer;
+     order : integer;
+     emitter_id : integer;
+     pipe_id   : integer;
+     lines_arr : array[1..100] of string[200];
+     lines_arr_trans : array[1..100] of string[200];
+
+ end;
+
+ type
+   TEmitter = Record
+     id : integer;
+     name : string[100];
+     cv   : string[20];
+     kd   : string[20];
+     max_press : string[20];
+     min_press: string[20];
+     constant : string[20];
+     correction : string[20];
+     hw : integer;
+     pipe_diam : string[20];
+     compensated : integer;
+     exponent : string[20];
+
+
+   end;
+
+  type
+   TPipe = Record
+     id : integer;
+     name : string[100];
+     flow   : string[20];
+     max_press : string[20];
+     diam : string[20];
+   end;
+
+ type
+   TSettings = Record
+     password : string[20];
+   end;
+
+var
+  Form1: TForm1;
+  trans_file : File;
+  Edits : array of TEdit;
+  TempEdits : array of TEdit;
+  Buttons: array of TSpeedButton;
+
+   products : array of TDripline;
+   driplines_file : File;
+   temp_driplines_file : File;
+   dripline : TDripline;
+   settings : TSettings;
+   emitter : TEmitter;
+   pipe : TPipe;
+   emitters_file      : File;
+   pipes_file      : File;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var i : integer;
+   atc : string;
+begin
+
+   deletefile(MMlang.fname);
+   MMlang.openfile;
+
+   reset(MMlang.ff);
+
+      assignfile(MMlang.ff2,'Translate2.dat');
+      rewrite(MMlang.ff2);
+
+   atc := '';
+
+   for i := 0 to length(Edits) - 1 do
+
+   begin
+      if i mod 2 = 0 then atc := '@';
+
+      writeln(MMlang.ff2,atc+Edits[i].Text);
+       atc := '';
+   end;
+
+      closefile(MMlang.ff2);
+
+      MMlang.close;
+      deletefile(MMlang.fname);
+      renameFile('Translate2.dat',MMLang.Fname);
+
+
+
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var i : integer;
+begin
+
+   top := 5;
+
+   setlength(Edits,  length(Edits) + 2);
+
+   for i := length(Edits) - 1 downto 2 do
+   begin
+      Edits[i] := Edits[i-2];
+   end;
+
+    Edits[0]:=TEdit.Create(Form1);
+    Edits[0].Text := edit1.Text;
+
+    Edits[1]:=TEdit.Create(Form1);
+    Edits[1].text := edit2.Text;
+    Button1Click(Sender);
+    FormActivate(Sender);
+
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+var dlid, index, amt, c, x : integer;
+begin
+
+if dripline_lb.count > 0 then
+begin
+
+
+    index := dripline_lb.ItemIndex;
+   if index = -1 then index := dripline_lb.Count - 1;
+
+   dlid := Integer(dripline_lb.Items.Objects[dripline_lb.Items.IndexOf(dripline_lb.Items[index])]);
+
+   AssignFile(driplines_file, 'driplines.ems');
+   AssignFile(temp_driplines_file, 'temp_driplines.ems');
+   ReWrite(temp_driplines_file);
+
+   // Reopen the file in read only mode
+   FileMode := fmOpenReadWrite;
+   Reset(driplines_file,1);
+   Reset(temp_driplines_file,1);
+
+   BlockRead(driplines_file, settings, sizeof(TSettings), amt);
+   BlockWrite(temp_driplines_file, settings, sizeof(TSettings));
+
+      while not Eof(driplines_file) do
+      begin
+
+        BlockRead(driplines_file, dripline, sizeof(TDripline), amt);
+
+        if dlid = dripline.id then
+        begin
+
+              for x := 0 to 100 do
+                 dripline.lines_arr_trans[x+1] := '';
+              for x := 0 to 100 do
+                 dripline.lines_arr[x+1] := '';
+
+              for x := 0 to dl_memo_trans.Lines.Count - 1 do
+                 dripline.lines_arr_trans[x+1] := dl_memo_trans.Lines[x];
+
+              for x := 0 to dl_memo.Lines.Count - 1 do
+                 dripline.lines_arr[x+1] := dl_memo.Lines[x];
+
+
+           BlockWrite(temp_driplines_file, dripline, sizeof(dripline));
+
+
+        end
+        else
+        begin
+
+           BlockWrite(temp_driplines_file, dripline, sizeof(dripline));
+
+        end;
+      end;
+
+   // Close the file for the last time
+   CloseFile(driplines_file);
+   CloseFile(temp_driplines_file);
+
+  DeleteFile('driplines.ems');
+  Rename(temp_driplines_file, 'driplines.ems');
+  DeleteFile('temp_driplines.ems');
+  load_driplines;
+
+end;
+
+
+
+end;
+
+procedure TForm1.dripline_lbClick(Sender: TObject);
+var index, dlid, amt, c, x : integer;
+
+begin
+
+   index := dripline_lb.ItemIndex;
+   if index = -1 then index := dripline_lb.Count - 1;
+
+   dripline_lb.Selected[index] := true;
+   dl_memo.Lines.Clear;
+   dl_memo_trans.Lines.Clear;
+
+   dlid := Integer(dripline_lb.Items.Objects[dripline_lb.Items.IndexOf(dripline_lb.Items[index])]);
+   AssignFile(driplines_file, 'driplines.ems');
+
+   // Reopen the file in read only mode
+   FileMode := fmOpenRead;
+   Reset(driplines_file,1);
+   BlockRead(driplines_file, settings, sizeof(TSettings), amt);
+
+
+   while not Eof(driplines_file) do
+   begin
+
+     BlockRead(driplines_file, dripline, sizeof(TDripline), amt);
+
+     if dlid = dripline.id then
+     begin
+
+           for x := 0 to length(dripline.lines_arr_trans) - 1 do
+              if dripline.lines_arr_trans[x+1] <> '' then
+                 dl_memo_trans.Lines.Add(dripline.lines_arr_trans[x+1]);
+
+           for x := 0 to length(dripline.lines_arr) - 1 do
+              if dripline.lines_arr[x+1] <> '' then
+                 dl_memo.Lines.Add(dripline.lines_arr[x+1])
+
+
+     end;
+
+   end;
+
+   // Close the file for the last time
+   CloseFile(driplines_file);
+
+end;
+
+procedure TForm1.OnButtonClick(Sender : TObject);
+var i, tag : integer;
+begin
+
+   setlength(TempEdits,0);
+
+   tag := (sender as TSpeedButton).tag;
+
+   for i := 0 to length(Edits) - 1 do
+   begin
+      if (Edits[i].Tag <> tag) and (Edits[i].Tag <> tag + 1) then
+      begin
+         SetLength(TempEdits, Length(TempEdits)+1);
+         TempEdits[High(TempEdits)] := Edits[i];
+      end
+      else
+      begin
+        // Edits[i].Hide;
+      end;
+   end;
+
+   setlength(Edits,length(TempEdits));
+   for i := 0 to length(Edits) - 1 do
+   begin
+      Edits[i] := TempEdits[i];
+   end;
+
+   //(sender as tbutton).hide;
+
+   Button1Click(Sender);
+   FormActivate(Sender);
+
+end;
+
+
+procedure TForm1.FormActivate(Sender: TObject);
+var ss,ss2,s3,s4,ss_,ss2_,blank,s : Shortstring;
+    j,i,p, top : integer;
+    pc : tcomponent;
+    bm : tbitmap;
+begin
+
+for i := ComponentCount - 1 downto 0 do
+begin
+  if Components[i].GetParentComponent is tScrollBox then
+     Components[i].free;
+end;
+
+
+   setlength(Edits, 0);
+
+   getdir(0,s);
+   MMLang.initlang('MM_calc_language.def');
+   MMlang.openfile;
+
+   i := 0;
+   while not eof(MMlang.ff) do
+   begin
+      readLn(MMlang.ff,ss);
+      i := i + 1;
+   end;
+
+   reset(MMlang.ff);
+
+   top := 5;
+
+   setlength(Edits, i);
+   setlength(Buttons, i);
+
+   i := 0;
+   while not eof(MMlang.ff) do
+   begin
+
+    {Buttons[i] := TSpeedButton.Create(Form1);
+    Buttons[i].Parent:= scrollbox1;
+    Buttons[i].Left:=10;
+    Buttons[i].Top:=top+7;
+    Buttons[i].width:=23;
+    Buttons[i].height:=22;
+    Buttons[i].onClick := OnButtonClick;
+    Buttons[i].tag:=i;
+    ImageList1.GetBitmap(0, Buttons[i].Glyph);    }
+
+    Edits[i]:=TEdit.Create(Form1);
+    Edits[i].Parent:= scrollbox1;
+    Edits[i].Left:=10;
+    Edits[i].Top:=top;
+    Edits[i].tag:=i;
+    Edits[i].width:=350;
+    //Edits[i].Enabled := false;
+
+    Edits[i+1]:=TEdit.Create(Form1);
+    Edits[i+1].Parent:= scrollbox1;
+    Edits[i+1].Left:=10;
+    Edits[i+1].Top:=Edits[i].Top+25;
+    Edits[i+1].tag:=i+1;
+    Edits[i+1].width:=350;
+
+    top := Edits[i+1].Top + 30;
+
+      readLn(MMlang.ff,ss);
+      readLn(MMlang.ff,ss2);
+
+      Edits[i].Text := Copy(ss, 2, length(ss));
+      Edits[i+1].Text := ss2;
+
+    i := i + 2;
+
+   end;
+
+   MMlang.close;
+
+
+   load_driplines;
+
+end;
+
+
+function getPipe(id: integer) : TPipe;
+var amt : integer;
+begin
+
+   AssignFile(pipes_file, 'pipes.ems');
+
+   // Reopen the file in read only mode
+   FileMode := fmOpenRead;
+   Reset(pipes_file,1);
+   BlockRead(pipes_file, settings, sizeof(TSettings), amt);
+
+   // Display the file contents
+   while not Eof(pipes_file) do
+   begin
+     BlockRead(pipes_file, pipe, sizeof(TPipe), amt);
+     if id = pipe.id then
+        result := pipe;
+   end;
+   CloseFile(pipes_file);
+end;
+
+
+function getEmitter(id: integer) : TEmitter;
+var amt : integer;
+begin
+
+   AssignFile(emitters_file, 'emitters.ems');
+
+   // Reopen the file in read only mode
+   FileMode := fmOpenRead;
+   Reset(emitters_file,1);
+   BlockRead(emitters_file, settings, sizeof(TSettings), amt);
+
+   // Display the file contents
+   while not Eof(emitters_file) do
+   begin
+     BlockRead(emitters_file, emitter, sizeof(TEmitter), amt);
+     if id = emitter.id then
+        result := emitter;
+   end;
+
+   CloseFile(emitters_file);
+end;
+
+procedure TForm1.load_driplines;
+var dlname : string;
+x, y, amt, c, dlid, p : integer;
+
+begin
+   p := 0;
+   dripline_lb.Clear;
+
+   AssignFile(driplines_file, 'driplines.ems');
+   // Reopen the file in read only mode
+   FileMode := fmOpenRead;
+   Reset(driplines_file,1);
+   BlockRead(driplines_file, settings, sizeof(TSettings), amt);
+
+
+   Setlength(products,500);
+   // Display the file contents
+   while not Eof(driplines_file) do
+   begin
+
+     BlockRead(driplines_file, dripline, sizeof(TDripline), amt);
+
+     products[p] := dripline;
+     p := p + 1;
+   end;
+
+   // Close the file for the last time
+   CloseFile(driplines_file);
+
+
+   Setlength(products,p);
+      for y := 0 to length(products) - 1 do
+      begin
+
+         dripline := products[y];
+         emitter := getEmitter(dripline.emitter_id);
+         pipe := getPipe(dripline.pipe_id);
+         dlname := inttostr(dripline.order) + ')   ' + pipe.name + ' - ' +emitter.name;
+
+         dripline_lb.Items.AddObject(dlname,  TObject(dripline.id));
+
+      end;
+
+
+end;
+
+
+end.

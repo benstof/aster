@@ -1,0 +1,614 @@
+object emitter_mng: Temitter_mng
+  Left = 0
+  Top = 0
+  Caption = 'Emitter Manager'
+  ClientHeight = 438
+  ClientWidth = 561
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 280
+    Top = 26
+    Width = 27
+    Height = 13
+    Caption = 'Name'
+  end
+  object Label2: TLabel
+    Left = 294
+    Top = 54
+    Width = 13
+    Height = 13
+    Caption = 'CV'
+  end
+  object Label3: TLabel
+    Left = 294
+    Top = 80
+    Width = 13
+    Height = 13
+    Caption = 'KD'
+  end
+  object Label4: TLabel
+    Left = 242
+    Top = 119
+    Width = 65
+    Height = 13
+    Caption = 'Max Pressure'
+  end
+  object Label5: TLabel
+    Left = 246
+    Top = 147
+    Width = 61
+    Height = 13
+    Caption = 'Min Pressure'
+  end
+  object Label6: TLabel
+    Left = 263
+    Top = 201
+    Width = 44
+    Height = 13
+    Caption = 'Constant'
+  end
+  object Label7: TLabel
+    Left = 257
+    Top = 174
+    Width = 50
+    Height = 13
+    Caption = 'Correction'
+  end
+  object Label8: TLabel
+    Left = 264
+    Top = 222
+    Width = 43
+    Height = 13
+    Caption = 'Hazen W'
+  end
+  object Label10: TLabel
+    Left = 585
+    Top = 20
+    Width = 64
+    Height = 13
+    Caption = 'Reg Spacings'
+    Visible = False
+  end
+  object Label11: TLabel
+    Left = 573
+    Top = 73
+    Width = 6
+    Height = 13
+    Caption = '2'
+    Visible = False
+  end
+  object Label12: TLabel
+    Left = 573
+    Top = 100
+    Width = 6
+    Height = 13
+    Caption = '3'
+    Visible = False
+  end
+  object Label13: TLabel
+    Left = 573
+    Top = 127
+    Width = 6
+    Height = 13
+    Caption = '4'
+    Visible = False
+  end
+  object Label14: TLabel
+    Left = 573
+    Top = 154
+    Width = 6
+    Height = 13
+    Caption = '5'
+    Visible = False
+  end
+  object Label15: TLabel
+    Left = 573
+    Top = 181
+    Width = 6
+    Height = 13
+    Caption = '6'
+    Visible = False
+  end
+  object Label16: TLabel
+    Left = 573
+    Top = 208
+    Width = 6
+    Height = 13
+    Caption = '7'
+    Visible = False
+  end
+  object Label17: TLabel
+    Left = 573
+    Top = 236
+    Width = 6
+    Height = 13
+    Caption = '8'
+    Visible = False
+  end
+  object Label18: TLabel
+    Left = 573
+    Top = 261
+    Width = 6
+    Height = 13
+    Caption = '9'
+    Visible = False
+  end
+  object Label19: TLabel
+    Left = 567
+    Top = 288
+    Width = 12
+    Height = 13
+    Caption = '10'
+    Visible = False
+  end
+  object Label20: TLabel
+    Left = 567
+    Top = 315
+    Width = 12
+    Height = 13
+    Caption = '11'
+    Visible = False
+  end
+  object Label21: TLabel
+    Left = 567
+    Top = 342
+    Width = 12
+    Height = 13
+    Caption = '12'
+    Visible = False
+  end
+  object Label22: TLabel
+    Left = 567
+    Top = 369
+    Width = 12
+    Height = 13
+    Caption = '13'
+    Visible = False
+  end
+  object Label23: TLabel
+    Left = 567
+    Top = 396
+    Width = 12
+    Height = 13
+    Caption = '14'
+    Visible = False
+  end
+  object Label24: TLabel
+    Left = 567
+    Top = 420
+    Width = 12
+    Height = 13
+    Caption = '15'
+    Visible = False
+  end
+  object Label25: TLabel
+    Left = 573
+    Top = 42
+    Width = 6
+    Height = 13
+    Caption = '1'
+    Visible = False
+  end
+  object Label26: TLabel
+    Left = 241
+    Top = 321
+    Width = 137
+    Height = 13
+    Caption = 'Flow equation coefficient (&x)'
+  end
+  object max_bar_lbl: TLabel
+    Left = 499
+    Top = 119
+    Width = 58
+    Height = 13
+    Caption = 'max_bar_lbl'
+  end
+  object min_bar_lbl: TLabel
+    Left = 499
+    Top = 147
+    Width = 31
+    Height = 13
+    Caption = 'Label1'
+  end
+  object em_coef_limits_lb: TLabel
+    Left = 443
+    Top = 326
+    Width = 23
+    Height = 13
+    Caption = 'limits'
+  end
+  object btn_save: TButton
+    Left = 222
+    Top = 391
+    Width = 75
+    Height = 26
+    Caption = 'Save'
+    TabOrder = 0
+    OnClick = btn_saveClick
+  end
+  object emitter_lb: TListBox
+    Left = 8
+    Top = 17
+    Width = 201
+    Height = 399
+    ItemHeight = 13
+    TabOrder = 1
+    TabWidth = 10
+    OnClick = emitter_lbClick
+  end
+  object em_name: TEdit
+    Left = 313
+    Top = 23
+    Width = 180
+    Height = 21
+    TabOrder = 2
+  end
+  object em_cv: TEdit
+    Left = 313
+    Top = 50
+    Width = 180
+    Height = 21
+    TabOrder = 3
+  end
+  object em_kd: TEdit
+    Left = 313
+    Top = 77
+    Width = 180
+    Height = 21
+    TabOrder = 4
+  end
+  object em_max_press: TEdit
+    Left = 313
+    Top = 111
+    Width = 180
+    Height = 21
+    TabOrder = 5
+  end
+  object em_min_press: TEdit
+    Left = 313
+    Top = 139
+    Width = 180
+    Height = 21
+    TabOrder = 6
+  end
+  object em_constant: TEdit
+    Left = 313
+    Top = 193
+    Width = 180
+    Height = 21
+    TabOrder = 7
+  end
+  object em_correction: TEdit
+    Left = 313
+    Top = 166
+    Width = 180
+    Height = 21
+    TabOrder = 8
+  end
+  object em_reg1: TEdit
+    Left = 585
+    Top = 39
+    Width = 80
+    Height = 21
+    TabOrder = 9
+    Visible = False
+  end
+  object em_reg2: TEdit
+    Left = 585
+    Top = 66
+    Width = 80
+    Height = 21
+    TabOrder = 10
+    Visible = False
+  end
+  object em_reg3: TEdit
+    Left = 585
+    Top = 93
+    Width = 80
+    Height = 21
+    TabOrder = 11
+    Visible = False
+  end
+  object em_reg4: TEdit
+    Left = 585
+    Top = 120
+    Width = 80
+    Height = 21
+    TabOrder = 12
+    Visible = False
+  end
+  object btn_delete: TButton
+    Left = 384
+    Top = 391
+    Width = 52
+    Height = 25
+    Caption = 'Delete'
+    TabOrder = 13
+    OnClick = btn_deleteClick
+  end
+  object em_reg5: TEdit
+    Left = 585
+    Top = 147
+    Width = 80
+    Height = 21
+    TabOrder = 14
+    Visible = False
+  end
+  object em_reg6: TEdit
+    Left = 585
+    Top = 174
+    Width = 80
+    Height = 21
+    TabOrder = 15
+    Visible = False
+  end
+  object em_reg7: TEdit
+    Left = 585
+    Top = 201
+    Width = 80
+    Height = 21
+    TabOrder = 16
+    Visible = False
+  end
+  object em_reg8: TEdit
+    Left = 585
+    Top = 228
+    Width = 80
+    Height = 21
+    TabOrder = 17
+    Visible = False
+  end
+  object em_reg9: TEdit
+    Left = 585
+    Top = 255
+    Width = 80
+    Height = 21
+    TabOrder = 18
+    Visible = False
+  end
+  object em_reg15: TEdit
+    Left = 585
+    Top = 417
+    Width = 80
+    Height = 21
+    TabOrder = 19
+    Visible = False
+  end
+  object em_reg14: TEdit
+    Left = 585
+    Top = 390
+    Width = 80
+    Height = 21
+    TabOrder = 20
+    Visible = False
+  end
+  object em_reg13: TEdit
+    Left = 585
+    Top = 363
+    Width = 80
+    Height = 21
+    TabOrder = 21
+    Visible = False
+  end
+  object em_reg12: TEdit
+    Left = 585
+    Top = 336
+    Width = 80
+    Height = 21
+    TabOrder = 22
+    Visible = False
+  end
+  object em_reg11: TEdit
+    Left = 585
+    Top = 309
+    Width = 80
+    Height = 21
+    TabOrder = 23
+    Visible = False
+  end
+  object em_reg10: TEdit
+    Left = 585
+    Top = 282
+    Width = 80
+    Height = 21
+    TabOrder = 24
+    Visible = False
+  end
+  object btn_new: TButton
+    Left = 303
+    Top = 391
+    Width = 75
+    Height = 25
+    Caption = 'New'
+    TabOrder = 25
+    OnClick = btn_newClick
+  end
+  object em_compensate: TRadioGroup
+    Left = 248
+    Top = 274
+    Width = 186
+    Height = 38
+    Caption = 'Compensated'
+    Columns = 2
+    Items.Strings = (
+      'Regular'
+      'Pressure')
+    TabOrder = 26
+    OnClick = em_compensateClick
+  end
+  object press_reg_cb: TComboBox
+    Left = 278
+    Top = 340
+    Width = 50
+    Height = 21
+    TabOrder = 27
+    Text = '0.05'
+    Visible = False
+    Items.Strings = (
+      '0.00'
+      '0.01'
+      '0.02'
+      '0.03'
+      '0.04'
+      '0.05'
+      '0.06'
+      '0.07'
+      '0.08'
+      '0.09'
+      '0.10'
+      '0.11'
+      '0.12'
+      '0.13'
+      '0.14'
+      '0.15'
+      '0.16'
+      '0.17'
+      '0.18'
+      '0.19'
+      '0.20')
+  end
+  object normal_reg_cb: TComboBox
+    Left = 222
+    Top = 342
+    Width = 50
+    Height = 21
+    TabOrder = 28
+    Text = '0.20'
+    Visible = False
+    Items.Strings = (
+      '0.15'
+      '0.16'
+      '0.17'
+      '0.18'
+      '0.19'
+      '0.20'
+      '0.21'
+      '0.22'
+      '0.23'
+      '0.24'
+      '0.25'
+      '0.26'
+      '0.27'
+      '0.28'
+      '0.29'
+      '0.30'
+      '0.31'
+      '0.32'
+      '0.33'
+      '0.34'
+      '0.35'
+      '0.36'
+      '0.37'
+      '0.38'
+      '0.39'
+      '0.40'
+      '0.41'
+      '0.42'
+      '0.43'
+      '0.44'
+      '0.45'
+      '0.46'
+      '0.47'
+      '0.48'
+      '0.49'
+      '0.50'
+      '0.51'
+      '0.52'
+      '0.53'
+      '0.54'
+      '0.55'
+      '0.56'
+      '0.57'
+      '0.58'
+      '0.59'
+      '0.60'
+      '0.61'
+      '0.62'
+      '0.63'
+      '0.64'
+      '0.65'
+      '0.66'
+      '0.67'
+      '0.68'
+      '0.69'
+      '0.70'
+      '0.71'
+      '0.72'
+      '0.73'
+      '0.74'
+      '0.75'
+      '0.76'
+      '0.77'
+      '0.78'
+      '0.79'
+      '0.80'
+      '0.81'
+      '0.82'
+      '0.83'
+      '0.84'
+      '0.85'
+      '0.86'
+      '0.87'
+      '0.88'
+      '0.89'
+      '0.90'
+      '0.91'
+      '0.92'
+      '0.93'
+      '0.94'
+      '0.95'
+      '0.96'
+      '0.97'
+      '0.98'
+      '0.99'
+      '1.00')
+  end
+  object em_hw: TComboBox
+    Left = 313
+    Top = 220
+    Width = 57
+    Height = 21
+    Hint = 'The Hazen-Williams roughness factor for the pipe'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 29
+    Text = '140'
+    Items.Strings = (
+      '100'
+      '105'
+      '110'
+      '115'
+      '120'
+      '125'
+      '130'
+      '135'
+      '140'
+      '145'
+      '150')
+  end
+  object em_ex: TEdit
+    Left = 384
+    Top = 318
+    Width = 53
+    Height = 21
+    TabOrder = 30
+  end
+  object Button1: TButton
+    Left = 442
+    Top = 392
+    Width = 114
+    Height = 25
+    Caption = 'Drip Lines'
+    TabOrder = 31
+    OnClick = Button1Click
+  end
+end

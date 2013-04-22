@@ -1,0 +1,70 @@
+unit admin_unt;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, IdGlobal, IdHash, IdHashMessageDigest;
+
+type
+  Tadmin_form = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    company_input: TEdit;
+    company_password_input: TEdit;
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  admin_form: Tadmin_form;
+
+ type
+   TSettings = Record
+     name : string[20];
+     password : string[20];
+     logged_in : boolean;
+   end;
+
+ var
+   emitters_file : File of TSettings;
+   settings : TSettings;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tadmin_form.Button1Click(Sender: TObject);
+begin
+
+      AssignFile(emitters_file, 'emitters.ems');
+
+      if fileexists('emitters.ems') then
+      Rewrite(emitters_file);
+
+      FileMode := fmOpenReadWrite;
+      Reset(emitters_file);
+      //seek(settings_file,filesize(settings_file));
+      //settings.name := company_input.Text;
+      settings.password := company_password_input.Text;
+      Write(emitters_file,settings);
+      CloseFile(emitters_file);
+
+      settings.logged_in := false;
+      self.Hide;
+      exit;
+
+end;
+
+procedure Tadmin_form.FormActivate(Sender: TObject);
+begin
+  company_input.Text := '';
+  company_password_input.Text := '';
+end;
+
+end.

@@ -1,0 +1,138 @@
+object pipe_mng: Tpipe_mng
+  Left = 0
+  Top = 0
+  Caption = 'Pipe Manager'
+  ClientHeight = 448
+  ClientWidth = 671
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 372
+    Top = 31
+    Width = 27
+    Height = 13
+    Caption = 'Name'
+  end
+  object Label4: TLabel
+    Left = 336
+    Top = 90
+    Width = 65
+    Height = 13
+    Caption = 'Max Pressure'
+  end
+  object Label9: TLabel
+    Left = 358
+    Top = 58
+    Width = 43
+    Height = 13
+    Caption = 'Diameter'
+  end
+  object drippipeU: TLabel
+    Left = 593
+    Top = 58
+    Width = 38
+    Height = 13
+    Caption = 'pipeunit'
+  end
+  object max_bar_lbl: TLabel
+    Left = 496
+    Top = 90
+    Width = 58
+    Height = 13
+    Caption = 'max_bar_lbl'
+  end
+  object pipe_lb: TListBox
+    Left = 27
+    Top = 28
+    Width = 201
+    Height = 120
+    ItemHeight = 13
+    TabOrder = 0
+    OnClick = pipe_lbClick
+  end
+  object pipe_name: TEdit
+    Left = 407
+    Top = 28
+    Width = 180
+    Height = 21
+    TabOrder = 1
+  end
+  object btn_save: TButton
+    Left = 14
+    Top = 383
+    Width = 75
+    Height = 26
+    Caption = 'Save'
+    TabOrder = 2
+    OnClick = btn_saveClick
+  end
+  object btn_new: TButton
+    Left = 95
+    Top = 383
+    Width = 75
+    Height = 25
+    Caption = 'New'
+    TabOrder = 3
+    OnClick = btn_newClick
+  end
+  object btn_delete: TButton
+    Left = 176
+    Top = 383
+    Width = 52
+    Height = 25
+    Caption = 'Delete'
+    TabOrder = 4
+    OnClick = btn_deleteClick
+  end
+  object pipe_diam: TEdit
+    Left = 407
+    Top = 55
+    Width = 180
+    Height = 21
+    TabOrder = 5
+  end
+  object press_lb: TListBox
+    Left = 407
+    Top = 90
+    Width = 83
+    Height = 135
+    ItemHeight = 13
+    Sorted = True
+    TabOrder = 6
+  end
+  object Button1: TButton
+    Left = 407
+    Top = 231
+    Width = 83
+    Height = 25
+    Caption = 'New'
+    TabOrder = 7
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 407
+    Top = 262
+    Width = 83
+    Height = 25
+    Caption = 'Delete'
+    TabOrder = 8
+    OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 234
+    Top = 383
+    Width = 114
+    Height = 25
+    Caption = 'Drip Lines'
+    TabOrder = 9
+    OnClick = Button3Click
+  end
+end

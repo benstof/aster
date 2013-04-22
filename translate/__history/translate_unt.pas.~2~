@@ -1,0 +1,218 @@
+unit translate_unt;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, taal_unt, Vcl.StdCtrls, cxGraphics,
+  cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxScrollBox, Vcl.ComCtrls,
+  Vcl.Buttons, Vcl.ImgList;
+
+type
+  TForm1 = class(TForm)
+    Button2: TButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Button1: TButton;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    ImageList1: TImageList;
+    ScrollBox1: TScrollBox;
+
+    procedure FormActivate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure OnButtonClick(Sender : TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  trans_file : File;
+  Edits : array of TEdit;
+  TempEdits : array of TEdit;
+  Buttons: array of TSpeedButton;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var i : integer;
+   atc : string;
+begin
+
+   deletefile(MMlang.fname);
+   MMlang.openfile;
+
+   reset(MMlang.ff);
+
+      assignfile(MMlang.ff2,'Translate2.dat');
+      rewrite(MMlang.ff2);
+
+   atc := '';
+
+   for i := 0 to length(Edits) - 1 do
+
+   begin
+      if i mod 2 = 0 then atc := '@';
+
+      writeln(MMlang.ff2,atc+Edits[i].Text);
+       atc := '';
+   end;
+
+      closefile(MMlang.ff2);
+
+      MMlang.close;
+      deletefile(MMlang.fname);
+      renameFile('Translate2.dat',MMLang.Fname);
+
+
+
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var i : integer;
+begin
+
+   top := 5;
+
+   setlength(Edits,  length(Edits) + 2);
+
+   for i := length(Edits) - 1 downto 2 do
+   begin
+      Edits[i] := Edits[i-2];
+   end;
+
+    Edits[0]:=TEdit.Create(Form1);
+    Edits[0].Text := edit1.Text;
+
+    Edits[1]:=TEdit.Create(Form1);
+    Edits[1].text := edit2.Text;
+    Button1Click(Sender);
+    FormActivate(Sender);
+
+end;
+
+procedure TForm1.OnButtonClick(Sender : TObject);
+var i, tag : integer;
+begin
+
+   setlength(TempEdits,0);
+
+   tag := (sender as TSpeedButton).tag;
+
+   for i := 0 to length(Edits) - 1 do
+   begin
+      if (Edits[i].Tag <> tag) and (Edits[i].Tag <> tag + 1) then
+      begin
+         SetLength(TempEdits, Length(TempEdits)+1);
+         TempEdits[High(TempEdits)] := Edits[i];
+      end
+      else
+      begin
+        // Edits[i].Hide;
+      end;
+   end;
+
+   setlength(Edits,length(TempEdits));
+   for i := 0 to length(Edits) - 1 do
+   begin
+      Edits[i] := TempEdits[i];
+   end;
+
+   //(sender as tbutton).hide;
+
+   Button1Click(Sender);
+   FormActivate(Sender);
+
+end;
+
+
+procedure TForm1.FormActivate(Sender: TObject);
+var ss,ss2,s3,s4,ss_,ss2_,blank,s : Shortstring;
+    j,i,p, top : integer;
+    pc : tcomponent;
+    bm : tbitmap;
+begin
+
+for i := ComponentCount - 1 downto 0 do
+begin
+  if Components[i].GetParentComponent is tScrollBox then
+     Components[i].free;
+end;
+
+
+   setlength(Edits, 0);
+
+   getdir(0,s);
+   MMLang.initlang('..\MM_calc_language.def');
+   MMlang.openfile;
+
+   i := 0;
+   while not eof(MMlang.ff) do
+   begin
+      readLn(MMlang.ff,ss);
+      i := i + 1;
+   end;
+
+   reset(MMlang.ff);
+
+   top := 5;
+
+   setlength(Edits, i);
+   setlength(Buttons, i);
+
+   i := 0;
+   while not eof(MMlang.ff) do
+   begin
+
+    Buttons[i] := TSpeedButton.Create(Form1);
+    //Buttons[i].Parent:= cont;
+    Buttons[i].Parent:= scrollbox1;
+    Buttons[i].Left:=10;
+    Buttons[i].Top:=top+7;
+    Buttons[i].width:=23;
+    Buttons[i].height:=22;
+    Buttons[i].onClick := OnButtonClick;
+    Buttons[i].tag:=i;
+    ImageList1.GetBitmap(0, Buttons[i].Glyph);
+
+    Edits[i]:=TEdit.Create(Form1);
+    //Edits[i].Parent:= cont;
+    Edits[i].Parent:= scrollbox1;
+    Edits[i].Left:=40;
+    Edits[i].Top:=top;
+    Edits[i].tag:=i;
+    Edits[i].width:=200;
+
+    Edits[i+1]:=TEdit.Create(Form1);
+    Edits[i+1].Parent:= scrollbox1;
+    Edits[i+1].Left:=40;
+    Edits[i+1].Top:=Edits[i].Top+25;
+    Edits[i+1].tag:=i+1;
+    Edits[i+1].width:=200;
+
+    top := Edits[i+1].Top + 30;
+
+      readLn(MMlang.ff,ss);
+      readLn(MMlang.ff,ss2);
+
+      Edits[i].Text := Copy(ss, 2, length(ss));
+      Edits[i+1].Text := ss2;
+
+    i := i + 2;
+
+   end;
+
+   MMlang.close;
+
+
+end;
+
+end.
