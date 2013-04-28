@@ -32,6 +32,7 @@ var
 
    var
    emitters_file : File;
+   pressures_file : File;
    pipes_file : File;
    driplines_file : File;
    settings : TSettings;
@@ -46,6 +47,17 @@ var amt : integer;
 begin
 
       settings.password := company_password_input.Text;
+
+      AssignFile(pressures_file, 'pressures.ems');
+      FileMode := fmOpenReadWrite;
+
+      if not fileexists('pressures.ems') then
+        Rewrite(pressures_file);
+
+         Reset(pressures_file, 1);
+         BlockWrite(pressures_file, settings, sizeof(settings));
+         CloseFile(pressures_file);
+
 
       AssignFile(emitters_file, 'emitters.ems');
       FileMode := fmOpenReadWrite;

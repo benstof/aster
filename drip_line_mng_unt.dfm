@@ -55,8 +55,8 @@ object drip_line_mng: Tdrip_line_mng
     ParentFont = False
   end
   object Label4: TLabel
-    Left = 16
-    Top = 399
+    Left = 320
+    Top = 394
     Width = 106
     Height = 19
     Caption = 'DripLine Info'
@@ -117,6 +117,19 @@ object drip_line_mng: Tdrip_line_mng
     ShowHint = True
     OnClick = up_btnClick
   end
+  object Label5: TLabel
+    Left = 16
+    Top = 394
+    Width = 152
+    Height = 19
+    Caption = 'DripLine Pressures'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object emitter_lb: TListBox
     Left = 16
     Top = 37
@@ -163,9 +176,9 @@ object drip_line_mng: Tdrip_line_mng
     OnClick = btn_deleteClick
   end
   object dl_memo: TMemo
-    Left = 16
+    Left = 320
     Top = 424
-    Width = 776
+    Width = 472
     Height = 123
     TabOrder = 5
   end
@@ -177,5 +190,14 @@ object drip_line_mng: Tdrip_line_mng
     Caption = 'Save'
     TabOrder = 6
     OnClick = btn_saveClick
+  end
+  object pressures_lb: TListBox
+    Left = 16
+    Top = 424
+    Width = 289
+    Height = 123
+    ItemHeight = 13
+    MultiSelect = True
+    TabOrder = 7
   end
 end

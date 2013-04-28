@@ -9,7 +9,8 @@ uses
   dxNavBar, AdvObj, units_unt, taal_unt, emitter_mng_unt, Vcl.ToolWin,
   Vcl.ActnMan, Vcl.ActnCtrls, Vcl.ActnMenus, admin_unt, pipe_mng_unt,
   dxNavBarCollns, cxClasses, dxNavBarBase, drip_line_mng_unt, Data.FMTBcd,
-  SimpleDS, Vcl.DBGrids, Data.DB, Datasnap.DBClient, Data.SqlExpr, irricalc;
+  SimpleDS, Vcl.DBGrids, Data.DB, Datasnap.DBClient, Data.SqlExpr, irricalc,
+  pressures_mng_unt;
 
 type
   Tcalcbox = class(TForm)
@@ -111,6 +112,8 @@ type
     Oflowh: TLabel;
     Flowlm1: TMenuItem;
     ManagePressures1: TMenuItem;
+    Label1: TLabel;
+    pressures_cb: TComboBox;
     procedure FormActivate(Sender: TObject);
     procedure FormDeactivate(Sender: TObject);
     procedure HlpClick(Sender: TObject);
@@ -138,6 +141,7 @@ type
     procedure ManageDriplines1Click(Sender: TObject);
     procedure Calculator1Click(Sender: TObject);
     procedure ManagePressures1Click(Sender: TObject);
+    procedure pressures_cbSelect(Sender: TObject);
 
   private
     { Private declarations }
@@ -160,6 +164,8 @@ var
 
   units : unitrec;
   selected_emitter : TEmitter;
+  selected_pressure : TPressure;
+
   selected_pipe : TPipe;
   //emitters_file      : File;
 
@@ -197,6 +203,34 @@ begin
    CloseFile(pipes_file);
 
 end;
+
+
+function getPressure(id: integer) : TPressure;
+var amt : integer;
+begin
+
+   AssignFile(pressures_file, 'pressures.ems');
+   if not fileexists('pressures.ems') then
+      ReWrite(pressures_file);
+
+
+   // Reopen the file in read only mode
+   FileMode := fmOpenRead;
+   Reset(pressures_file,1);
+   BlockRead(pressures_file, settings, sizeof(TSettings), amt);
+
+   // Display the file contents
+   while not Eof(pressures_file) do
+   begin
+     BlockRead(pressures_file, pressure, sizeof(Tpressure), amt);
+     if id = pressure.id then
+        result := pressure;
+   end;
+
+   CloseFile(pressures_file);
+
+end;
+
 
 function getEmitter(id: integer) : TEmitter;
 var amt : integer;
@@ -1081,8 +1115,11 @@ begin
    grap:=false;
    p2:=0;
    pf:= strtor(pfric.Items[selected_emitter.hw]); //(pfric.text);
-   maxlos:= strtor(selected_emitter.max_press) * 10; //.press_si(strtor(maxp.Text))*10;
+
+   //maxlos:= strtor(selected_emitter.max_press) * 10; //.press_si(strtor(maxp.Text))*10;
+   maxlos:= strtor(selected_pressure.max_press) * 10;
    minlos:= strtor(selected_emitter.min_press) * 10; //.press_si(strtor(minp.Text))*10;
+
    //p1:=minlos;
    maxlim:=maxlos;
    corfacV:=100+ strtor(selected_emitter.correction); //(corfac.Text);
@@ -1302,6 +1339,8 @@ procedure Tcalcbox.dripline_lbClick(Sender: TObject);
 var index, id, amt, x : integer;
 name : string;
 mem_line : string[200];
+pressure : TPressure;
+press_name : string[100];
 
 begin
 
@@ -1372,9 +1411,30 @@ begin
         pipeinputd.text := rtostr(main_unt.units.si_diam(strtor(pipe.diam)),10,3);
 
 
+
+        pressures_cb.Clear;
+
+        for x := 1 to 20 do
+        begin
+           if dripline.pressures_arr[x] <> 0 then
+           begin
+              pressure := getPressure(dripline.pressures_arr[x]);
+              //press_name := pressure.name + ' ' + pressure.max_press;
+              pressures_cb.SelText := 'Min: ' + selected_emitter.min_press +
+              ' Max: ' + pressure.max_press + ' ' + pressure.name;
+
+              pressures_cb.AddItem(
+              'Min: ' + selected_emitter.min_press +
+              ' Max: ' + pressure.max_press + ' ' + pressure.name, TObject(pressure.id));
+           end;
+        end;
+
+
         end;
 
       end;
+
+
 
    // Close the file for the last time
    CloseFile(driplines_file);
@@ -1604,6 +1664,16 @@ begin
 
        end;
    end;
+end;
+
+procedure Tcalcbox.pressures_cbSelect(Sender: TObject);
+var i,id : integer;
+begin
+
+   i := pressures_cb.ItemIndex;
+   id := integer(pressures_cb.Items.Objects[i]);
+   selected_pressure := getPressure(id);
+
 end;
 
 procedure Tcalcbox.psetupClick(Sender: TObject);

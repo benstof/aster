@@ -68,7 +68,7 @@ object pipe_mng: Tpipe_mng
   end
   object btn_save: TButton
     Left = 27
-    Top = 207
+    Top = 210
     Width = 75
     Height = 26
     Caption = 'Save'

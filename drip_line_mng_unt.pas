@@ -22,6 +22,8 @@ type
     Label4: TLabel;
     SpeedButton2: TSpeedButton;
     SpeedButton1: TSpeedButton;
+    Label5: TLabel;
+    pressures_lb: TListBox;
     procedure FormActivate(Sender: TObject);
     procedure load_pipes;
     procedure load_emitters;
@@ -35,6 +37,7 @@ type
     procedure dripline_lbClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure up_btnClick(Sender: TObject);
+    procedure load_pressures;
   private
     { Private declarations }
   public
@@ -55,6 +58,7 @@ var
      pipe_id   : integer;
      lines_arr : array[1..100] of string[200];
      lines_arr_trans : array[1..100] of string[200];
+     pressures_arr : array[1..20] of integer;
 
  end;
 
@@ -67,16 +71,38 @@ var
    products : array of TDripline;
    driplines_file : File;
    temp_driplines_file : File;
+   pressures_file : File;
    dripline : TDripline;
    settings : TSettings;
    pact : integer;
 
 implementation
 
-uses emitter_mng_unt, pipe_mng_unt;
+uses emitter_mng_unt, pipe_mng_unt, pressures_mng_unt;
 
 {$R *.dfm}
 {$I-}
+
+procedure Tdrip_line_mng.load_pressures;
+var amt : integer;
+begin
+   pressures_lb.Clear;
+   AssignFile(pressures_file, 'pressures.ems');
+   // Reopen the file in read only mode
+   FileMode := fmOpenRead;
+   Reset(pressures_file,1);
+   BlockRead(pressures_file, settings, sizeof(TSettings), amt);
+
+   // Display the file contents
+   while not Eof(pressures_file) do
+   begin
+     //Read(emitters_file, emitter);
+     BlockRead(pressures_file, pressure, sizeof(Tpressure), amt);
+     pressures_lb.Items.AddObject(pressure.name,  TObject(pressure.id));
+   end;
+   // Close the file for the last time
+   CloseFile(pressures_file);
+end;
 
 procedure Tdrip_line_mng.load_emitters;
 var amt : integer;
@@ -324,9 +350,11 @@ begin
 end;
 
 procedure Tdrip_line_mng.dripline_lbClick(Sender: TObject);
-var index, dlid, amt, c, x : integer;
+var index, dlid, amt, c, x, press_id, y: integer;
 
 begin
+
+   pressures_lb.ClearSelection;
 
    pact := dripline_lb.ItemIndex;
    index := dripline_lb.ItemIndex;
@@ -351,6 +379,7 @@ begin
 
      if dlid = dripline.id then
      begin
+
         if waarde.readint('Irricalc','AltLanguage',1) = 1 then
         begin
            for x := 0 to length(dripline.lines_arr_trans) - 1 do
@@ -363,6 +392,20 @@ begin
               if dripline.lines_arr[x+1] <> '' then
                  dl_memo.Lines.Add(dripline.lines_arr[x+1])
         end;
+
+
+
+                 for y := 1 to 20 do
+                 begin
+                    if dripline.pressures_arr[y] <> 0 then
+                    begin
+                       press_id := dripline.pressures_arr[y];
+                       pressures_lb.Selected[press_id - 1] := true;
+                    end;
+                 end;
+
+
+
 
      end;
 
@@ -433,7 +476,7 @@ end;
 end;
 
 procedure Tdrip_line_mng.btn_saveClick(Sender: TObject);
-var dlid, index, amt, c, x : integer;
+var dlid, index, amt, c, x,press_id, y : integer;
 begin
 
 if dripline_lb.count > 0 then
@@ -480,6 +523,31 @@ begin
                  dripline.lines_arr[x+1] := dl_memo.Lines[x];
            end;
 
+           for x := 1 to 20 do
+              dripline.pressures_arr[x] := 0;
+
+           for x := 0 to pressures_lb.Count - 1 do
+           begin
+
+              press_id := Integer(pressures_lb.Items.Objects[pressures_lb.Items.IndexOf(pressures_lb.Items[x])]);
+
+              if pressures_lb.Selected[x] then
+              begin
+
+                 for y := 1 to 20 do
+                 begin
+                    if dripline.pressures_arr[y] = 0 then
+                    begin
+                       dripline.pressures_arr[y] := press_id;
+                       break;
+                    end;
+                 end;
+
+              end;
+
+           end;
+
+
            BlockWrite(temp_driplines_file, dripline, sizeof(dripline));
 
 
@@ -490,6 +558,7 @@ begin
            BlockWrite(temp_driplines_file, dripline, sizeof(dripline));
 
         end;
+
       end;
 
    // Close the file for the last time
@@ -683,6 +752,15 @@ begin
             MMLAng.getname(components[j]);
 
    {$IOChecks off}
+
+   AssignFile(pressures_file, 'pressures.ems');
+   if not fileexists('pressures.ems') then
+   begin
+      ReWrite(pressures_file);
+      CloseFile(pressures_file);
+   end;
+   load_pressures;
+
 
    AssignFile(pipes_file, 'pipes.ems');
    if not fileexists('pipes.ems') then
