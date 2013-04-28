@@ -110,6 +110,7 @@ type
     Products: TLabel;
     Oflowh: TLabel;
     Flowlm1: TMenuItem;
+    ManagePressures1: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormDeactivate(Sender: TObject);
     procedure HlpClick(Sender: TObject);
@@ -136,6 +137,7 @@ type
     procedure limits_typeClick(Sender: TObject);
     procedure ManageDriplines1Click(Sender: TObject);
     procedure Calculator1Click(Sender: TObject);
+    procedure ManagePressures1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -287,6 +289,14 @@ begin
     login_form.forwhat := 1;
     login_form.Show;
 
+end;
+
+procedure Tcalcbox.ManagePressures1Click(Sender: TObject);
+begin
+    // Show emitter manager
+    login_form.next := 0;
+    login_form.forwhat := 1;
+    login_form.Show;
 end;
 
 procedure Tcalcbox.redo_labels;

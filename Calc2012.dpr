@@ -10,7 +10,8 @@ uses
   login_unt in 'login_unt.pas' {login_form},
   admin_unt in 'admin_unt.pas' {admin_form},
   pipe_mng_unt in 'pipe_mng_unt.pas' {pipe_mng},
-  drip_line_mng_unt in 'drip_line_mng_unt.pas' {drip_line_mng};
+  drip_line_mng_unt in 'drip_line_mng_unt.pas' {drip_line_mng},
+  pressures_mng_unt in 'pressures_mng_unt.pas' {pressures_mng};
 
 {$R *.res}
 
@@ -23,5 +24,6 @@ begin
   Application.CreateForm(Tadmin_form, admin_form);
   Application.CreateForm(Tpipe_mng, pipe_mng);
   Application.CreateForm(Tdrip_line_mng, drip_line_mng);
+  Application.CreateForm(Tpressures_mng, pressures_mng);
   Application.Run;
 end.

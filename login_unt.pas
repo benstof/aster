@@ -52,6 +52,24 @@ begin
    if forwhat = 1 then
    begin
 
+         if next = 0 then
+         begin
+
+            AssignFile(emitters_file, 'pressures.ems');
+            FileMode := fmOpenRead;
+            Reset(emitters_file,1);
+            BlockRead(emitters_file, settings, sizeof(TSettings), amt);
+            CloseFile(emitters_file);
+
+            if (input_password.Text = settings.password) then
+            begin
+               pressures_mng.show;
+               self.Hide;
+               exit;
+             end;
+
+         end;
+
          if next = 1 then
          begin
 

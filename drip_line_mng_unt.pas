@@ -99,7 +99,6 @@ begin
    CloseFile(emitters_file);
 end;
 
-
 procedure Tdrip_line_mng.load_pipes;
 var amt : integer;
 begin
@@ -140,7 +139,6 @@ begin
    end;
    CloseFile(pipes_file);
 end;
-
 
 function getEmitter(id: integer) : TEmitter;
 var amt : integer;
@@ -508,7 +506,6 @@ end;
 
 end;
 
-
 procedure Tdrip_line_mng.btn_addClick(Sender: TObject);
 var add_it : boolean;
 dlid, amt, c, x, order  : integer;
@@ -649,7 +646,6 @@ begin
 
 end;
 
-
 procedure Tdrip_line_mng.emitter_lbClick(Sender: TObject);
 var index, eid, amt : integer;
 begin
@@ -720,8 +716,6 @@ j : integer;
 begin
 
    setlength(products,0);
-
-
 
 end;
 

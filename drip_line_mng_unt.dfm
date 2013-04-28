@@ -57,7 +57,7 @@ object drip_line_mng: Tdrip_line_mng
   object Label4: TLabel
     Left = 16
     Top = 399
-    Width = 107
+    Width = 106
     Height = 19
     Caption = 'DripLine Info'
     Font.Charset = DEFAULT_CHARSET
