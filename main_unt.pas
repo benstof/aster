@@ -114,6 +114,8 @@ type
     ManagePressures1: TMenuItem;
     Label1: TLabel;
     pressures_cb: TComboBox;
+    Label2: TLabel;
+    press_in_range: TEdit;
     procedure FormActivate(Sender: TObject);
     procedure FormDeactivate(Sender: TObject);
     procedure HlpClick(Sender: TObject);
@@ -957,6 +959,14 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
           result := true;
         end;
 
+        if (press_in_range.Text < selected_emitter.min_press) or
+           (press_in_range.Text > selected_pressure.max_press) then
+        begin
+          ShowMessage('Please enter a pressure within the selected Range ' + selected_emitter.min_press + ' and ' + selected_pressure.max_press);
+          result := true;
+        end;
+
+
     end;
 
     function comma1 : string;
@@ -1117,7 +1127,8 @@ begin
    pf:= strtor(pfric.Items[selected_emitter.hw]); //(pfric.text);
 
    //maxlos:= strtor(selected_emitter.max_press) * 10; //.press_si(strtor(maxp.Text))*10;
-   maxlos:= strtor(selected_pressure.max_press) * 10;
+   //maxlos:= strtor(selected_pressure.max_press) * 10;
+   maxlos:= strtor(press_in_range.Text) * 10;
    minlos:= strtor(selected_emitter.min_press) * 10; //.press_si(strtor(minp.Text))*10;
 
    //p1:=minlos;
@@ -1420,14 +1431,21 @@ begin
            begin
               pressure := getPressure(dripline.pressures_arr[x]);
               //press_name := pressure.name + ' ' + pressure.max_press;
-              pressures_cb.SelText := 'Min: ' + selected_emitter.min_press +
-              ' Max: ' + pressure.max_press + ' ' + pressure.name;
 
               pressures_cb.AddItem(
               'Min: ' + selected_emitter.min_press +
               ' Max: ' + pressure.max_press + ' ' + pressure.name, TObject(pressure.id));
-           end;
+           end
+           else break;
         end;
+
+        if x > 1 then
+        begin
+           selected_pressure := pressure;
+           pressures_cb.ItemIndex := x - 2;
+        end;
+      //  pressures_cb.SelText := 'Min: ' + selected_emitter.min_press +
+      //  ' Max: ' + pressure.max_press + ' ' + pressure.name;
 
 
         end;
