@@ -116,6 +116,7 @@ type
     pressures_cb: TComboBox;
     Label2: TLabel;
     press_in_range: TEdit;
+    Admin1: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormDeactivate(Sender: TObject);
     procedure HlpClick(Sender: TObject);
@@ -644,6 +645,7 @@ procedure Tcalcbox.Admin1Click(Sender: TObject);
 begin
     login_form.forwhat := 0;
     login_form.Show;
+    login_form.next := 5;
 end;
 
 procedure Tcalcbox.alt_lang_cbClick(Sender: TObject);
