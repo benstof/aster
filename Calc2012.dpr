@@ -12,7 +12,7 @@ uses
   pipe_mng_unt in 'pipe_mng_unt.pas' {pipe_mng},
   drip_line_mng_unt in 'drip_line_mng_unt.pas' {drip_line_mng},
   pressures_mng_unt in 'pressures_mng_unt.pas' {pressures_mng},
-  admin_menu_unt in 'admin_menu_unt.pas' {Form1};
+  admin_menu_unt in 'admin_menu_unt.pas' {admin_menu};
 
 {$R *.res}
 
@@ -26,6 +26,6 @@ begin
   Application.CreateForm(Tpipe_mng, pipe_mng);
   Application.CreateForm(Tdrip_line_mng, drip_line_mng);
   Application.CreateForm(Tpressures_mng, pressures_mng);
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(Tadmin_menu, admin_menu);
   Application.Run;
 end.

@@ -31,6 +31,8 @@ var
 
 implementation
 
+uses admin_menu_unt;
+
 {$R *.dfm}
 
 
@@ -39,6 +41,14 @@ var password : string;
 amt : integer;
 
 begin
+
+   if forwhat = 5 then
+   begin
+
+         admin_menu.Show;
+         self.Hide;
+         exit;
+   end;
 
    if forwhat = 0 then
    begin

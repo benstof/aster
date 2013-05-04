@@ -90,7 +90,6 @@ type
     dripline_lb: TListBox;
     MainMenu1: TMainMenu;
     settings_mn: TMenuItem;
-    ManageEmitters1: TMenuItem;
     units_metric_rb: TMenuItem;
     units_imp_rb: TMenuItem;
     Units2: TMenuItem;
@@ -100,18 +99,14 @@ type
     min_bar_lbl: TLabel;
     flow_constant_unt_lbl: TLabel;
     spacing_unt_lbl: TLabel;
-    N1: TMenuItem;
     alt_lang_cb: TMenuItem;
     em_ex: TEdit;
-    ManagePipes1: TMenuItem;
     limits_type: TRadioGroup;
-    ManageDriplines1: TMenuItem;
     dl_memo: TMemo;
     Calculator1: TMenuItem;
     Products: TLabel;
     Oflowh: TLabel;
     Flowlm1: TMenuItem;
-    ManagePressures1: TMenuItem;
     Label1: TLabel;
     pressures_cb: TComboBox;
     Label2: TLabel;
@@ -643,9 +638,8 @@ end;
 
 procedure Tcalcbox.Admin1Click(Sender: TObject);
 begin
-    login_form.forwhat := 0;
+    login_form.forwhat := 5;
     login_form.Show;
-    login_form.next := 5;
 end;
 
 procedure Tcalcbox.alt_lang_cbClick(Sender: TObject);
@@ -961,8 +955,8 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
           result := true;
         end;
 
-        if (press_in_range.Text < selected_emitter.min_press) or
-           (press_in_range.Text > selected_pressure.max_press) then
+        if (strtor(press_in_range.Text) < strtor(selected_emitter.min_press)) or
+           (strtor(press_in_range.Text) > strtor(selected_pressure.max_press)) then
         begin
           ShowMessage('Please enter a pressure within the selected Range ' + selected_emitter.min_press + ' and ' + selected_pressure.max_press);
           result := true;

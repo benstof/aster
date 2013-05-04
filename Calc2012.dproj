@@ -105,7 +105,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="admin_menu_unt.pas">
-            <Form>Form1</Form>
+            <Form>admin_menu</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Debug">

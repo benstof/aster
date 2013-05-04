@@ -161,6 +161,8 @@ begin
     pressure_lbClick(sender);
   end;
 
+  drip_line_mng.delete_from(pid, 3);
+
 end;
 
 end;

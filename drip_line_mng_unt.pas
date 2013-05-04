@@ -328,6 +328,17 @@ begin
               skip := true;
         end;
 
+        // Remove pressure from this dripline
+        if what = 3 then
+        begin
+           // Go through all pressures in dripline
+           for x := 1 to 20 do
+           begin
+              if dripline.pressures_arr[x] = id then dripline.pressures_arr[x] := 0;
+           end;
+        end;
+
+
         if not skip then
         begin
            BlockWrite(temp_driplines_file, dripline, sizeof(TDripline));
