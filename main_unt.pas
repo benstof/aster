@@ -779,7 +779,7 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
         semi : string[20];
         press : string[10];
         x : integer;
-        n : double;
+        n,tmp_minlos : double;
     begin
 
       if formatI=0 then
@@ -800,14 +800,23 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
 
                Prange[0]:=8;
 
+               if minlos < 5 then
+               tmp_minlos := 5
+               else
+               tmp_minlos := minlos;
+
                n := 0;
                for x := 1 to 8 do
                begin
 
-                 Prange[x] := (minlos / 10) + n;
+                 Prange[x] := (tmp_minlos / 10) + n;
                  n := n + 0.5;
 
-                 if (Prange[x] * 10) >= maxlos then break;
+                 if (Prange[x] * 10) >= maxlos then
+                 begin
+                    Prange[x] := maxlos / 10;
+                    break;
+                 end;
 
                end;
 
@@ -820,7 +829,7 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
                Prange[7]:=3.5;
                Prange[8]:=4;   }
 
-      Prange[1]:=0.75;
+      //Prange[1]:=0.25;
       semi := '   ';
 
       if commas then semi := ' ; ';
@@ -1031,7 +1040,7 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
           end;
           p1:=p1+((maxlos-base)/29.01);
 
-          if maxlos = 5 then  maxlos := 4.9;
+         // if maxlos = 5 then  maxlos := 4.9;
 
        until p1>maxlos;
 
@@ -1103,6 +1112,7 @@ begin
    //maxlos:= strtor(selected_pressure.max_press) * 10;
    maxlos:= strtor(press_in_range.Text) * 10;
    minlos:= strtor(selected_emitter.min_press) * 10; //.press_si(strtor(minp.Text))*10;
+   if minlos = 5 then minlos := 4.9;
 
    //p1:=minlos;
    maxlim:=maxlos;
