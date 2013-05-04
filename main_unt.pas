@@ -140,6 +140,7 @@ type
     procedure Calculator1Click(Sender: TObject);
     procedure ManagePressures1Click(Sender: TObject);
     procedure pressures_cbSelect(Sender: TObject);
+    procedure press_in_rangeChange(Sender: TObject);
 
   private
     { Private declarations }
@@ -202,7 +203,6 @@ begin
 
 end;
 
-
 function getPressure(id: integer) : TPressure;
 var amt : integer;
 begin
@@ -228,7 +228,6 @@ begin
    CloseFile(pressures_file);
 
 end;
-
 
 function getEmitter(id: integer) : TEmitter;
 var amt : integer;
@@ -282,11 +281,6 @@ begin
      pipe := getPipe(dripline.pipe_id);
      dlname := pipe.name + ' - ' +emitter.name;
      dripline_lb.Items.AddObject(dlname,  TObject(dripline.id));
-
-         {  for x := 0 to dripline.lines - 1 do
-           begin
-               BlockRead(driplines_file, mem_line, 200, amt);
-           end;  }
 
    end;
    // Close the file for the last time
@@ -344,7 +338,8 @@ begin
    spacing_unt_lbl.Caption := '('+units.riser+')';
 
    pipeinputd.text := rtostr(main_unt.units.si_diam(strtor(selected_pipe.diam)),10,3);
-   maxp.text := rtostr(main_unt.units.si_press(strtor(selected_emitter.max_press)),10,2);
+   //maxp.text := rtostr(main_unt.units.si_press(strtor(selected_emitter.max_press)),10,2);
+   maxp.text := rtostr(main_unt.units.si_press(strtor(press_in_range.Text)),10,2);
    minp.text := rtostr(main_unt.units.si_press(strtor(selected_emitter.min_press)),10,2);
    flow_constant.text := rtostr(main_unt.units.si_press(strtor(selected_emitter.constant)),10,2);
 
@@ -523,7 +518,6 @@ end;
 
 function getflow(p,k,x : double) : double;
     begin
-       //p:=2;
        p:=p/10;  //10;  //meter to bar
        result:=k*mag(p,x)/60/60;                //l/s
     end;
@@ -533,24 +527,6 @@ var s4 : string;
 begin
 
     s4 := waarde.readstring('Irricalc','Regspas'+inttostr(ee),'10');
-    //readstring('Irricalc','Pfric','145');
-    {case ee of
-      1 : s4:=regspasD1.text;
-      2 : s4:=regspasD2.text;
-      3 : s4:=regspasD3.text;
-      4 : s4:=regspasD4.text;
-      5 : s4:=regspasD5.text;
-      6 : s4:=regspasD6.text;
-      7 : s4:=regspasD7.text;
-      8 : s4:=regspasD8.text;
-      9 : s4:=regspasD9.text;
-      10: s4:=regspasD10.text;
-      11: s4:=regspasD11.text;
-      12: s4:=regspasD12.text;
-      13: s4:=regspasD13.text;
-      14: s4:=regspasD14.text;
-      15: s4:=regspasD15.text;
-    end;  }
     result := s4;
 
 end;
@@ -803,7 +779,7 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
         semi : string[20];
         press : string[10];
         x : integer;
-
+        n : double;
     begin
 
       if formatI=0 then
@@ -821,30 +797,30 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
    begin
       memo1.lines.add('                               Zero Slope');
 
-     { if compensate_type.itemindex = 0 then
-      begin
-               Prange[0]:=7;
-               Prange[1]:=1.5;
-               Prange[2]:=2;
-               Prange[3]:=2.5;
-               Prange[4]:=3;
-               Prange[5]:=3.5;
-               Prange[6]:=4;
-               Prange[7]:=4.5;
-      end
-      else
-      begin  }
+
                Prange[0]:=8;
-               Prange[1]:=0.75;
+
+               n := 0;
+               for x := 1 to 8 do
+               begin
+
+                 Prange[x] := (minlos / 10) + n;
+                 n := n + 0.5;
+
+                 if (Prange[x] * 10) >= maxlos then break;
+
+               end;
+
+               {Prange[1]:=0.75;
                Prange[2]:=1;
                Prange[3]:=1.5;
                Prange[4]:=2;
                Prange[5]:=2.5;
                Prange[6]:=3;
                Prange[7]:=3.5;
-               Prange[8]:=4;
-     // end;
+               Prange[8]:=4;   }
 
+      Prange[1]:=0.75;
       semi := '   ';
 
       if commas then semi := ' ; ';
@@ -936,6 +912,8 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
          ShowMessage('Please enter pipe diameter');
          result := true;
        end;
+
+       //if maxlos = 5 then maxlos := 51;
 
        if maxlos<=minlos then
        begin
@@ -1052,6 +1030,9 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
               slope_press := p1;
           end;
           p1:=p1+((maxlos-base)/29.01);
+
+          if maxlos = 5 then  maxlos := 4.9;
+
        until p1>maxlos;
 
        if grap then
@@ -1078,20 +1059,16 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
     var x : integer;
     begin
 
-       MaxLos:=Prange[1];
+      // MaxLos:=Prange[1];
 
        for x := 1 to trunc(Prange[0]) do
-
        begin
           MaxLos:=Prange[x]*10;
           ddd:=units.si_len(getLength2(0,emitspas,ee));
           if maxlos=20 then FillLength:=ddd;
           ss:=ss+r_s(ddd,6,0)+comma1;
-          //MaxLos:=MaxLos+5;
           plotform.check_maxlos(maxlos, emitspas, ddd, ee);
-      end;
-
-      // until Maxlos>range2;
+       end;
 
     end;
 
@@ -1408,7 +1385,9 @@ begin
         coefficient_variation.Text := emitter.cv;
         kd_factor.Text := emitter.kd;
         corFac.Text := emitter.correction;
-        maxp.text := rtostr(main_unt.units.si_press(strtor(emitter.max_press)),10,2);
+        //maxp.text := rtostr(main_unt.units.si_press(strtor(emitter.max_press)),10,2);
+
+        maxp.text := rtostr(main_unt.units.si_press(strtor(press_in_range.Text)),10,2);
         minp.text := rtostr(main_unt.units.si_press(strtor(emitter.min_press)),10,2);
         flow_constant.text := rtostr(main_unt.units.si_press(strtor(emitter.constant)),10,2);
         pfric.ItemIndex := emitter.hw;
@@ -1688,6 +1667,11 @@ begin
    id := integer(pressures_cb.Items.Objects[i]);
    selected_pressure := getPressure(id);
 
+end;
+
+procedure Tcalcbox.press_in_rangeChange(Sender: TObject);
+begin
+   maxp.text := rtostr(main_unt.units.si_press(strtor(press_in_range.Text)),10,2);
 end;
 
 procedure Tcalcbox.psetupClick(Sender: TObject);
