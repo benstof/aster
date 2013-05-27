@@ -332,7 +332,7 @@ begin
         if what = 3 then
         begin
            // Go through all pressures in dripline
-           for x := 1 to 20 do
+           for x := 1 to 200 do
            begin
               if dripline.pressures_arr[x] = id then dripline.pressures_arr[x] := 0;
            end;
@@ -361,7 +361,7 @@ begin
 end;
 
 procedure Tdrip_line_mng.dripline_lbClick(Sender: TObject);
-var index, dlid, amt, c, x, press_id, y: integer;
+var index, dlid, amt, c, x, press_id, y, j: integer;
 
 begin
 
@@ -406,12 +406,17 @@ begin
 
 
 
-                 for y := 1 to 20 do
+                 for y := 1 to length(dripline.pressures_arr) - 1 do
                  begin
                     if dripline.pressures_arr[y] <> 0 then
                     begin
                        press_id := dripline.pressures_arr[y];
-                       pressures_lb.Selected[press_id - 1] := true;
+
+                       for j := 0 to pressures_lb.Count - 1 do
+                       begin
+                          if press_id = Integer(pressures_lb.Items.Objects[pressures_lb.Items.IndexOf(pressures_lb.Items[j])]) then pressures_lb.Selected[j] := true;
+                       end;
+
                     end;
                  end;
 
@@ -534,7 +539,7 @@ begin
                  dripline.lines_arr[x+1] := dl_memo.Lines[x];
            end;
 
-           for x := 1 to 20 do
+           for x := 1 to length(dripline.pressures_arr) - 1 do
               dripline.pressures_arr[x] := 0;
 
            for x := 0 to pressures_lb.Count - 1 do
@@ -545,7 +550,7 @@ begin
               if pressures_lb.Selected[x] then
               begin
 
-                 for y := 1 to 20 do
+                 for y := 1 to length(dripline.pressures_arr) - 1 do
                  begin
                     if dripline.pressures_arr[y] = 0 then
                     begin

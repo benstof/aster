@@ -8,9 +8,9 @@
     <Transaction>2012/12/06 22:52:54.000.057,=C:\Users\benstof\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2012/12/08 14:38:04.000.528,=C:\Users\benstof\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2012/12/12 10:45:57.000.477,=C:\Users\benstof\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2012/12/12 10:47:13.000.963,C:\Users\benstof\Documents\RAD Studio\Projects\Unit1.dfm=C:\Work\Projects\Mm_IrriCalc_2012\translate\translate_unt.dfm</Transaction>
-    <Transaction>2012/12/12 10:47:13.000.963,C:\Users\benstof\Documents\RAD Studio\Projects\Unit1.pas=C:\Work\Projects\Mm_IrriCalc_2012\translate\translate_unt.pas</Transaction>
-    <Transaction>2012/12/12 10:47:17.000.640,C:\Users\benstof\Documents\RAD Studio\Projects\Project1.dproj=C:\Work\Projects\Mm_IrriCalc_2012\translate\translator.dproj</Transaction>
+    <Transaction>2012/12/12 10:47:13.000.963,C:\Work\Projects\Mm_IrriCalc_2012\translate\translate_unt.pas=C:\Users\benstof\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2012/12/12 10:47:13.000.963,C:\Work\Projects\Mm_IrriCalc_2012\translate\translate_unt.dfm=C:\Users\benstof\Documents\RAD Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2012/12/12 10:47:17.000.640,C:\Work\Projects\Mm_IrriCalc_2012\translate\translator.dproj=C:\Users\benstof\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
     <Transaction>2012/12/12 10:47:41.000.651,=C:\Work\Projects\Mm_IrriCalc_2012\taal_unt.pas</Transaction>
   </Transactions>
 </BorlandProject>

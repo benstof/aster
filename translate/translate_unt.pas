@@ -49,6 +49,7 @@ type
      pipe_id   : integer;
      lines_arr : array[1..100] of string[200];
      lines_arr_trans : array[1..100] of string[200];
+     pressures_arr : array[1..20] of integer;
 
  end;
 

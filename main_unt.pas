@@ -1410,7 +1410,7 @@ begin
 
         pressures_cb.Clear;
 
-        for x := 1 to 20 do
+        for x := 1 to length(dripline.pressures_arr) - 1 do
         begin
            if dripline.pressures_arr[x] <> 0 then
            begin
