@@ -8,7 +8,18 @@ uses
   Dialogs, SDL_rchart, SDL_boxplot, StdCtrls, Buttons, Grids, BaseGrid,
   AdvGrid, AdvSprd, cxLabel, cxControls, cxContainer, cxEdit, cxTextEdit,
   Menus, cxLookAndFeelPainters, cxButtons, ComCtrls, cxGraphics,
-  cxLookAndFeels, AdvObj, taal_unt, irricalc;
+  cxLookAndFeels, AdvObj, taal_unt, irricalc, dxSkinsCore, dxSkinBlack,
+  dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
+  dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013White,
+  dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010,
+  dxSkinWhiteprint, dxSkinXmas2008Blue;
 
 type
 
@@ -104,8 +115,8 @@ type
     font1: TLabel;
     Label3: TLabel;
     Greek: TCheckBox;
-    DChart: TRChart;
     mychart: TRChart;
+    dchart: TRChart;
     procedure BitBtn1Click(Sender: TObject);
     procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
@@ -708,15 +719,15 @@ var max3,maxp,maxl,step,ket,max2,tmp,maxs : real;
    bm : tbitmap;
 begin
 
-  mychart.Scale1X.RangeLow := 0;                { range of chart area }
-  mychart.Scale1X.RangeHigh := 150;
+ { mychart.Scale1X.RangeLow := 0;                { range of chart area }
+{  mychart.Scale1X.RangeHigh := 150;
   mychart.Scale1Y.RangeLow := 0;
   mychart.Scale1Y.RangeHigh := 0.5;
 
   mychart.ClearGraf;                          { initialize chart }
 
-  {
-  MyChart.Scale1X.RangeLow := 0;
+
+ { MyChart.Scale1X.RangeLow := 0;
   MyChart.Scale1X.RangeHigh := 150;
   MyChart.Scale1Y.RangeLow := 0;
   MyChart.Scale1Y.RangeHigh := 0.5;

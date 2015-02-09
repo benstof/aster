@@ -25,6 +25,7 @@ object PlotForm: TPlotForm
     Cursor = crDefault
     ColCount = 3
     DefaultRowHeight = 21
+    DrawingStyle = gdsClassic
     FixedCols = 1
     RowCount = 16
     FixedRows = 1
@@ -159,6 +160,7 @@ object PlotForm: TPlotForm
     Cursor = crDefault
     ColCount = 35
     DefaultRowHeight = 21
+    DrawingStyle = gdsClassic
     FixedCols = 0
     RowCount = 300
     FixedRows = 0
@@ -606,7 +608,7 @@ object PlotForm: TPlotForm
     Top = 4
     Width = 541
     Height = 621
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     TabOrder = 2
     object TabSheet1: TTabSheet
       Caption = 'Lenghts'
@@ -867,16 +869,18 @@ object PlotForm: TPlotForm
         Colors.Default = clGradientActiveCaption
         TabOrder = 24
       end
-      object DChart: TRChart
+      object dchart: TRChart
         Left = 49
-        Top = 167
+        Top = 184
         Width = 469
-        Height = 371
+        Height = 354
+        AvoidDuplicateMarks = False
         AllocSize = 1000
         AutoRedraw = True
         MarginRight = 20
         MarginTop = 20
         MarginBottom = 40
+        MinDupMarkDist = 1
         RRim = 20
         TRim = 20
         BRim = 40
@@ -895,7 +899,6 @@ object PlotForm: TPlotForm
         JointLayers.L01yControlledBy = 1
         JointLayers.L02xControlledBy = 2
         JointLayers.L02yControlledBy = 2
-        Caption = ''
         CaptionPosX = 0
         CaptionPosY = -16
         CaptionAlignment = taRightJustify
@@ -923,6 +926,8 @@ object PlotForm: TPlotForm
         CrossHair4.LineWid = 1
         MouseAction = maNone
         MouseCursorFixed = True
+        PanGridDx = 1.000000000000000000
+        PanGridDy = 1.000000000000000000
         Scale1X.CaptionPosX = 0
         Scale1X.CaptionPosY = 22
         Scale1X.CaptionAlignment = taCenter
@@ -1298,11 +1303,13 @@ object PlotForm: TPlotForm
         Top = 167
         Width = 469
         Height = 371
+        AvoidDuplicateMarks = False
         AllocSize = 1000
         AutoRedraw = True
         MarginRight = 20
         MarginTop = 20
         MarginBottom = 40
+        MinDupMarkDist = 1
         RRim = 20
         TRim = 20
         BRim = 40
@@ -1321,7 +1328,6 @@ object PlotForm: TPlotForm
         JointLayers.L01yControlledBy = 1
         JointLayers.L02xControlledBy = 2
         JointLayers.L02yControlledBy = 2
-        Caption = ''
         CaptionPosX = 0
         CaptionPosY = -16
         CaptionAlignment = taRightJustify
@@ -1349,6 +1355,8 @@ object PlotForm: TPlotForm
         CrossHair4.LineWid = 1
         MouseAction = maNone
         MouseCursorFixed = True
+        PanGridDx = 1.000000000000000000
+        PanGridDy = 1.000000000000000000
         Scale1X.CaptionPosX = 0
         Scale1X.CaptionPosY = 22
         Scale1X.CaptionAlignment = taCenter
