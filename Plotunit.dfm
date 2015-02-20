@@ -2,8 +2,8 @@ object PlotForm: TPlotForm
   Left = 450
   Top = 188
   Caption = 'Mm Calc Plot'
-  ClientHeight = 633
-  ClientWidth = 551
+  ClientHeight = 627
+  ClientWidth = 554
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,6 +17,14 @@ object PlotForm: TPlotForm
   OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
+  object PBox1: TPaintBox
+    Left = -38
+    Top = 475
+    Width = 337
+    Height = 272
+    Color = clRed
+    ParentColor = False
+  end
   object plot1: TAdvSpreadGrid
     Left = 586
     Top = 48
@@ -612,13 +620,6 @@ object PlotForm: TPlotForm
     TabOrder = 2
     object TabSheet1: TTabSheet
       Caption = 'Lenghts'
-      object PBox1: TPaintBox
-        Left = 8
-        Top = 132
-        Width = 520
-        Height = 461
-        Visible = False
-      end
       object Label3: TLabel
         Left = 416
         Top = 16
@@ -871,9 +872,9 @@ object PlotForm: TPlotForm
       end
       object dchart: TRChart
         Left = 49
-        Top = 184
-        Width = 469
-        Height = 354
+        Top = 167
+        Width = 456
+        Height = 362
         AvoidDuplicateMarks = False
         AllocSize = 1000
         AutoRedraw = True
@@ -899,6 +900,34 @@ object PlotForm: TPlotForm
         JointLayers.L01yControlledBy = 1
         JointLayers.L02xControlledBy = 2
         JointLayers.L02yControlledBy = 2
+        JointLayers.L03xControlledBy = 3
+        JointLayers.L03yControlledBy = 3
+        JointLayers.L04xControlledBy = 4
+        JointLayers.L04yControlledBy = 4
+        JointLayers.L05xControlledBy = 5
+        JointLayers.L05yControlledBy = 5
+        JointLayers.L06xControlledBy = 6
+        JointLayers.L06yControlledBy = 6
+        JointLayers.L07xControlledBy = 7
+        JointLayers.L07yControlledBy = 7
+        JointLayers.L08xControlledBy = 8
+        JointLayers.L08yControlledBy = 8
+        JointLayers.L09xControlledBy = 9
+        JointLayers.L09yControlledBy = 9
+        JointLayers.L10xControlledBy = 10
+        JointLayers.L10yControlledBy = 10
+        JointLayers.L11xControlledBy = 11
+        JointLayers.L11yControlledBy = 11
+        JointLayers.L12xControlledBy = 12
+        JointLayers.L12yControlledBy = 12
+        JointLayers.L13xControlledBy = 13
+        JointLayers.L13yControlledBy = 13
+        JointLayers.L14xControlledBy = 14
+        JointLayers.L14yControlledBy = 14
+        JointLayers.L15xControlledBy = 15
+        JointLayers.L15yControlledBy = 15
+        JointLayers.L16xControlledBy = 16
+        JointLayers.L16yControlledBy = 16
         CaptionPosX = 0
         CaptionPosY = -16
         CaptionAlignment = taRightJustify
@@ -1036,6 +1065,114 @@ object PlotForm: TPlotForm
         Scale2Y.ScalePos = 0
         Scale2Y.Visible = False
         Scale2Y.ScaleLocation = slLeft
+        Scale3X.CaptionPosX = 10
+        Scale3X.CaptionPosY = 100
+        Scale3X.CaptionAlignment = taCenter
+        Scale3X.CaptionAnchor = uaSclCenter
+        Scale3X.ColorScale = clGreen
+        Scale3X.DateFormat.TimeFormat = tfHHMMSS
+        Scale3X.DateFormat.DateSeparator = '-'
+        Scale3X.DateFormat.TimeSeparator = ':'
+        Scale3X.DateFormat.YearLength = ylYYYY
+        Scale3X.DateFormat.MonthName = True
+        Scale3X.DateFormat.DateOrder = doDDMMYY
+        Scale3X.DateFormat.DateForTime = dtOnePerDay
+        Scale3X.DecPlaces = -2
+        Scale3X.Font.Charset = DEFAULT_CHARSET
+        Scale3X.Font.Color = clWindowText
+        Scale3X.Font.Height = -11
+        Scale3X.Font.Name = 'Tahoma'
+        Scale3X.Font.Style = []
+        Scale3X.Logarithmic = False
+        Scale3X.LabelType = ftNum
+        Scale3X.MinTicks = 3
+        Scale3X.MinRange = 0.000000000100000000
+        Scale3X.RangeHigh = 1.000000000000000000
+        Scale3X.ShortTicks = True
+        Scale3X.ScalePos = 0
+        Scale3X.Visible = False
+        Scale3X.ScaleLocation = slBottom
+        Scale3Y.CaptionPosX = 10
+        Scale3Y.CaptionPosY = 100
+        Scale3Y.CaptionAlignment = taRightJustify
+        Scale3Y.CaptionAnchor = uaSclTopLft
+        Scale3Y.ColorScale = clGreen
+        Scale3Y.DateFormat.TimeFormat = tfHHMMSS
+        Scale3Y.DateFormat.DateSeparator = '-'
+        Scale3Y.DateFormat.TimeSeparator = ':'
+        Scale3Y.DateFormat.YearLength = ylYYYY
+        Scale3Y.DateFormat.MonthName = True
+        Scale3Y.DateFormat.DateOrder = doDDMMYY
+        Scale3Y.DateFormat.DateForTime = dtOnePerDay
+        Scale3Y.DecPlaces = -2
+        Scale3Y.Font.Charset = DEFAULT_CHARSET
+        Scale3Y.Font.Color = clWindowText
+        Scale3Y.Font.Height = -11
+        Scale3Y.Font.Name = 'Tahoma'
+        Scale3Y.Font.Style = []
+        Scale3Y.Logarithmic = False
+        Scale3Y.LabelType = ftNum
+        Scale3Y.MinTicks = 3
+        Scale3Y.MinRange = 0.000000000100000000
+        Scale3Y.RangeHigh = 1.000000000000000000
+        Scale3Y.ShortTicks = True
+        Scale3Y.ScalePos = 0
+        Scale3Y.Visible = False
+        Scale3Y.ScaleLocation = slLeft
+        Scale4X.CaptionPosX = 10
+        Scale4X.CaptionPosY = 100
+        Scale4X.CaptionAlignment = taCenter
+        Scale4X.CaptionAnchor = uaSclCenter
+        Scale4X.ColorScale = clOlive
+        Scale4X.DateFormat.TimeFormat = tfHHMMSS
+        Scale4X.DateFormat.DateSeparator = '-'
+        Scale4X.DateFormat.TimeSeparator = ':'
+        Scale4X.DateFormat.YearLength = ylYYYY
+        Scale4X.DateFormat.MonthName = True
+        Scale4X.DateFormat.DateOrder = doDDMMYY
+        Scale4X.DateFormat.DateForTime = dtOnePerDay
+        Scale4X.DecPlaces = -2
+        Scale4X.Font.Charset = DEFAULT_CHARSET
+        Scale4X.Font.Color = clWindowText
+        Scale4X.Font.Height = -11
+        Scale4X.Font.Name = 'Tahoma'
+        Scale4X.Font.Style = []
+        Scale4X.Logarithmic = False
+        Scale4X.LabelType = ftNum
+        Scale4X.MinTicks = 3
+        Scale4X.MinRange = 0.000000000100000000
+        Scale4X.RangeHigh = 1.000000000000000000
+        Scale4X.ShortTicks = True
+        Scale4X.ScalePos = 0
+        Scale4X.Visible = False
+        Scale4X.ScaleLocation = slBottom
+        Scale4Y.CaptionPosX = 10
+        Scale4Y.CaptionPosY = 100
+        Scale4Y.CaptionAlignment = taRightJustify
+        Scale4Y.CaptionAnchor = uaSclTopLft
+        Scale4Y.ColorScale = clOlive
+        Scale4Y.DateFormat.TimeFormat = tfHHMMSS
+        Scale4Y.DateFormat.DateSeparator = '-'
+        Scale4Y.DateFormat.TimeSeparator = ':'
+        Scale4Y.DateFormat.YearLength = ylYYYY
+        Scale4Y.DateFormat.MonthName = True
+        Scale4Y.DateFormat.DateOrder = doDDMMYY
+        Scale4Y.DateFormat.DateForTime = dtOnePerDay
+        Scale4Y.DecPlaces = -2
+        Scale4Y.Font.Charset = DEFAULT_CHARSET
+        Scale4Y.Font.Color = clWindowText
+        Scale4Y.Font.Height = -11
+        Scale4Y.Font.Name = 'Tahoma'
+        Scale4Y.Font.Style = []
+        Scale4Y.Logarithmic = False
+        Scale4Y.LabelType = ftNum
+        Scale4Y.MinTicks = 3
+        Scale4Y.MinRange = 0.000000000100000000
+        Scale4Y.RangeHigh = 1.000000000000000000
+        Scale4Y.ShortTicks = True
+        Scale4Y.ScalePos = 0
+        Scale4Y.Visible = False
+        Scale4Y.ScaleLocation = slLeft
         ShadowStyle = ssFlying
         ShadowColor = clGrayText
         ShadowBakColor = clBtnFace
@@ -1328,6 +1465,34 @@ object PlotForm: TPlotForm
         JointLayers.L01yControlledBy = 1
         JointLayers.L02xControlledBy = 2
         JointLayers.L02yControlledBy = 2
+        JointLayers.L03xControlledBy = 3
+        JointLayers.L03yControlledBy = 3
+        JointLayers.L04xControlledBy = 4
+        JointLayers.L04yControlledBy = 4
+        JointLayers.L05xControlledBy = 5
+        JointLayers.L05yControlledBy = 5
+        JointLayers.L06xControlledBy = 6
+        JointLayers.L06yControlledBy = 6
+        JointLayers.L07xControlledBy = 7
+        JointLayers.L07yControlledBy = 7
+        JointLayers.L08xControlledBy = 8
+        JointLayers.L08yControlledBy = 8
+        JointLayers.L09xControlledBy = 9
+        JointLayers.L09yControlledBy = 9
+        JointLayers.L10xControlledBy = 10
+        JointLayers.L10yControlledBy = 10
+        JointLayers.L11xControlledBy = 11
+        JointLayers.L11yControlledBy = 11
+        JointLayers.L12xControlledBy = 12
+        JointLayers.L12yControlledBy = 12
+        JointLayers.L13xControlledBy = 13
+        JointLayers.L13yControlledBy = 13
+        JointLayers.L14xControlledBy = 14
+        JointLayers.L14yControlledBy = 14
+        JointLayers.L15xControlledBy = 15
+        JointLayers.L15yControlledBy = 15
+        JointLayers.L16xControlledBy = 16
+        JointLayers.L16yControlledBy = 16
         CaptionPosX = 0
         CaptionPosY = -16
         CaptionAlignment = taRightJustify
@@ -1465,6 +1630,114 @@ object PlotForm: TPlotForm
         Scale2Y.ScalePos = 0
         Scale2Y.Visible = False
         Scale2Y.ScaleLocation = slLeft
+        Scale3X.CaptionPosX = 10
+        Scale3X.CaptionPosY = 100
+        Scale3X.CaptionAlignment = taCenter
+        Scale3X.CaptionAnchor = uaSclCenter
+        Scale3X.ColorScale = clGreen
+        Scale3X.DateFormat.TimeFormat = tfHHMMSS
+        Scale3X.DateFormat.DateSeparator = '-'
+        Scale3X.DateFormat.TimeSeparator = ':'
+        Scale3X.DateFormat.YearLength = ylYYYY
+        Scale3X.DateFormat.MonthName = True
+        Scale3X.DateFormat.DateOrder = doDDMMYY
+        Scale3X.DateFormat.DateForTime = dtOnePerDay
+        Scale3X.DecPlaces = -2
+        Scale3X.Font.Charset = DEFAULT_CHARSET
+        Scale3X.Font.Color = clWindowText
+        Scale3X.Font.Height = -11
+        Scale3X.Font.Name = 'Tahoma'
+        Scale3X.Font.Style = []
+        Scale3X.Logarithmic = False
+        Scale3X.LabelType = ftNum
+        Scale3X.MinTicks = 3
+        Scale3X.MinRange = 0.000000000100000000
+        Scale3X.RangeHigh = 1.000000000000000000
+        Scale3X.ShortTicks = True
+        Scale3X.ScalePos = 0
+        Scale3X.Visible = False
+        Scale3X.ScaleLocation = slBottom
+        Scale3Y.CaptionPosX = 10
+        Scale3Y.CaptionPosY = 100
+        Scale3Y.CaptionAlignment = taRightJustify
+        Scale3Y.CaptionAnchor = uaSclTopLft
+        Scale3Y.ColorScale = clGreen
+        Scale3Y.DateFormat.TimeFormat = tfHHMMSS
+        Scale3Y.DateFormat.DateSeparator = '-'
+        Scale3Y.DateFormat.TimeSeparator = ':'
+        Scale3Y.DateFormat.YearLength = ylYYYY
+        Scale3Y.DateFormat.MonthName = True
+        Scale3Y.DateFormat.DateOrder = doDDMMYY
+        Scale3Y.DateFormat.DateForTime = dtOnePerDay
+        Scale3Y.DecPlaces = -2
+        Scale3Y.Font.Charset = DEFAULT_CHARSET
+        Scale3Y.Font.Color = clWindowText
+        Scale3Y.Font.Height = -11
+        Scale3Y.Font.Name = 'Tahoma'
+        Scale3Y.Font.Style = []
+        Scale3Y.Logarithmic = False
+        Scale3Y.LabelType = ftNum
+        Scale3Y.MinTicks = 3
+        Scale3Y.MinRange = 0.000000000100000000
+        Scale3Y.RangeHigh = 1.000000000000000000
+        Scale3Y.ShortTicks = True
+        Scale3Y.ScalePos = 0
+        Scale3Y.Visible = False
+        Scale3Y.ScaleLocation = slLeft
+        Scale4X.CaptionPosX = 10
+        Scale4X.CaptionPosY = 100
+        Scale4X.CaptionAlignment = taCenter
+        Scale4X.CaptionAnchor = uaSclCenter
+        Scale4X.ColorScale = clOlive
+        Scale4X.DateFormat.TimeFormat = tfHHMMSS
+        Scale4X.DateFormat.DateSeparator = '-'
+        Scale4X.DateFormat.TimeSeparator = ':'
+        Scale4X.DateFormat.YearLength = ylYYYY
+        Scale4X.DateFormat.MonthName = True
+        Scale4X.DateFormat.DateOrder = doDDMMYY
+        Scale4X.DateFormat.DateForTime = dtOnePerDay
+        Scale4X.DecPlaces = -2
+        Scale4X.Font.Charset = DEFAULT_CHARSET
+        Scale4X.Font.Color = clWindowText
+        Scale4X.Font.Height = -11
+        Scale4X.Font.Name = 'Tahoma'
+        Scale4X.Font.Style = []
+        Scale4X.Logarithmic = False
+        Scale4X.LabelType = ftNum
+        Scale4X.MinTicks = 3
+        Scale4X.MinRange = 0.000000000100000000
+        Scale4X.RangeHigh = 1.000000000000000000
+        Scale4X.ShortTicks = True
+        Scale4X.ScalePos = 0
+        Scale4X.Visible = False
+        Scale4X.ScaleLocation = slBottom
+        Scale4Y.CaptionPosX = 10
+        Scale4Y.CaptionPosY = 100
+        Scale4Y.CaptionAlignment = taRightJustify
+        Scale4Y.CaptionAnchor = uaSclTopLft
+        Scale4Y.ColorScale = clOlive
+        Scale4Y.DateFormat.TimeFormat = tfHHMMSS
+        Scale4Y.DateFormat.DateSeparator = '-'
+        Scale4Y.DateFormat.TimeSeparator = ':'
+        Scale4Y.DateFormat.YearLength = ylYYYY
+        Scale4Y.DateFormat.MonthName = True
+        Scale4Y.DateFormat.DateOrder = doDDMMYY
+        Scale4Y.DateFormat.DateForTime = dtOnePerDay
+        Scale4Y.DecPlaces = -2
+        Scale4Y.Font.Charset = DEFAULT_CHARSET
+        Scale4Y.Font.Color = clWindowText
+        Scale4Y.Font.Height = -11
+        Scale4Y.Font.Name = 'Tahoma'
+        Scale4Y.Font.Style = []
+        Scale4Y.Logarithmic = False
+        Scale4Y.LabelType = ftNum
+        Scale4Y.MinTicks = 3
+        Scale4Y.MinRange = 0.000000000100000000
+        Scale4Y.RangeHigh = 1.000000000000000000
+        Scale4Y.ShortTicks = True
+        Scale4Y.ScalePos = 0
+        Scale4Y.Visible = False
+        Scale4Y.ScaleLocation = slLeft
         ShadowStyle = ssFlying
         ShadowColor = clGrayText
         ShadowBakColor = clBtnFace
@@ -1516,6 +1789,53 @@ object PlotForm: TPlotForm
         TabOrder = 1
         OnClick = GreekClick
       end
+    end
+  end
+  object cxStyleRepository1: TcxStyleRepository
+    Left = 80
+    Top = 40
+    PixelsPerInch = 96
+    object cxStyle1: TcxStyle
+      AssignedValues = [svColor]
+      Color = clGradientActiveCaption
+    end
+    object cxStyle2: TcxStyle
+      AssignedValues = [svColor]
+      Color = clFuchsia
+    end
+    object cxStyle3: TcxStyle
+      AssignedValues = [svColor]
+      Color = clYellow
+    end
+    object cxStyle4: TcxStyle
+      AssignedValues = [svColor]
+      Color = clLime
+    end
+    object cxStyle5: TcxStyle
+      AssignedValues = [svColor]
+      Color = clRed
+    end
+    object cxStyle6: TcxStyle
+      AssignedValues = [svColor]
+      Color = clGreen
+    end
+    object cxStyle7: TcxStyle
+    end
+    object cxStyle8: TcxStyle
+    end
+    object cxStyle9: TcxStyle
+    end
+    object cxStyle10: TcxStyle
+    end
+    object cxStyle11: TcxStyle
+    end
+    object cxStyle12: TcxStyle
+    end
+    object cxStyle13: TcxStyle
+    end
+    object cxStyle14: TcxStyle
+    end
+    object cxStyle15: TcxStyle
     end
   end
 end

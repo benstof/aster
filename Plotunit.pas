@@ -19,7 +19,10 @@ uses
   dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010,
-  dxSkinWhiteprint, dxSkinXmas2008Blue;
+  dxSkinWhiteprint, dxSkinXmas2008Blue, cxStyles, dxSkinscxPCPainter,
+  cxCustomData, cxFilter, cxData, cxDataStorage, cxNavigator, Data.DB, cxDBData,
+  cxGridChartView, cxGridLevel, cxClasses, cxGridCustomView,  units_unt,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid;
 
 type
 
@@ -59,7 +62,6 @@ type
     discap1: TcxLabel;
     Dcap: TcxTextEdit;
     cxLabel1: TcxLabel;
-    PBox1: TPaintBox;
     BitBtn1: TBitBtn;
     BitBtn3: TBitBtn;
     Y1: TcxLabel;
@@ -115,10 +117,26 @@ type
     font1: TLabel;
     Label3: TLabel;
     Greek: TCheckBox;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStyle1: TcxStyle;
+    cxStyle2: TcxStyle;
+    cxStyle3: TcxStyle;
+    cxStyle4: TcxStyle;
+    cxStyle5: TcxStyle;
+    cxStyle6: TcxStyle;
+    cxStyle7: TcxStyle;
+    cxStyle8: TcxStyle;
+    cxStyle9: TcxStyle;
+    cxStyle10: TcxStyle;
+    cxStyle11: TcxStyle;
+    cxStyle12: TcxStyle;
+    cxStyle13: TcxStyle;
+    cxStyle14: TcxStyle;
+    cxStyle15: TcxStyle;
+    PBox1: TPaintBox;
     mychart: TRChart;
     dchart: TRChart;
     procedure BitBtn1Click(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
     procedure BitBtn3Click(Sender: TObject);
     procedure BitBtn4Click(Sender: TObject);
     procedure DcapKeyUp(Sender: TObject; var Key: Word;
@@ -149,10 +167,11 @@ implementation
 
 {$R *.dfm}
 
-uses form2unt,clipbrd,fontformunt;
+uses form2unt,clipbrd,fontformunt, main_unt;
 
 procedure TPlotForm.check_maxlos(maxlos, emitspas, ddd : double; ee : integer);
 begin
+
 
    if maxlos=35 then
                begin
@@ -167,6 +186,7 @@ begin
                   end;
                   plotform.Addplot(1,ee,ddd, emitspas);
                end;
+
 end;
 
 function TPlotForm.Ccolor(j:integer):tcolor;
@@ -233,7 +253,7 @@ end;
 procedure TPlotForm.AddPlot(pl,ee:integer; ddd, emitspas:double);
     var s : string;
     begin
-       s:=rtostr(emitspas*100,10,0);
+       s:=rtostr(main_unt.units.SI_space(emitspas*100),10,0);
        with plotform do
        if pl=1 then
        begin
@@ -498,13 +518,13 @@ begin
    else
    begin}
       prt:=1;
-      with pbox1 do
+    {  with pbox1 do
       begin
          _w1:=0;
          _w2:=width-l;
          _h1:=0;
          _h2:=height-r;
-      end;
+      end;  }
       if nuut then pbox1.repaint;
 //   end;
 end;
@@ -719,28 +739,6 @@ var max3,maxp,maxl,step,ket,max2,tmp,maxs : real;
    bm : tbitmap;
 begin
 
- { mychart.Scale1X.RangeLow := 0;                { range of chart area }
-{  mychart.Scale1X.RangeHigh := 150;
-  mychart.Scale1Y.RangeLow := 0;
-  mychart.Scale1Y.RangeHigh := 0.5;
-
-  mychart.ClearGraf;                          { initialize chart }
-
-
- { MyChart.Scale1X.RangeLow := 0;
-  MyChart.Scale1X.RangeHigh := 150;
-  MyChart.Scale1Y.RangeLow := 0;
-  MyChart.Scale1Y.RangeHigh := 0.5;
-
-  MyChart.ClearGraf;                       }
-
-  dChart.Scale1X.RangeLow := 10;                { range of chart area }
-  dChart.Scale1X.RangeHigh := 100;
-  dChart.Scale1Y.RangeLow := 0;
-  dChart.Scale1Y.RangeHigh := 200;
-
-  dChart.ClearGraf;                          { initialize chart }
-
    maxp:=0;
    max2:=10;
    max3:=10;
@@ -753,64 +751,7 @@ begin
 
       with grap do
       begin
-       (*  if pbox1=nil then
-         begin
-            kanv:=printer.canvas;
-            if bmp then
-            begin
-               bm:=tbitmap.create;
-               bm.width:=trunc(1000*1.2);
-               bm.height:=trunc(650*1.2);
 
-               pwpix:=bm.width;
-               phpix:=bm.width;
-
-               phmm:=260;
-               pwmm:=300;
-               ppmm:=4.5;
-
-               kanv:=bm.canvas;
-            end;
-            setlimit(nil,kanv,0,maxl,0,maxp,true,pw(150),pw(50),ph(280*260/phmm*1.1));
-            printhead('Sprinkler Profile',100,910);
-            b1:=210;
-            b2:=300;
-            with kanv do
-            begin
-               setpw(2);
-               moveto(pw(145),ph(b1));
-               lineto(pw(950),ph(b1));
-               lineto(pw(950),ph(b2));
-               lineto(pw(145),ph(b2));
-               lineto(pw(145),ph(b1));
-
-               ii:=round((1000-200)/10);
-
-               moveto(pw(145+ii*2),ph(b1));
-               lineto(pw(145+ii*2),ph(b2));
-               moveto(pw(145+ii*4),ph(b1));
-               lineto(pw(145+ii*4),ph(b2));
-               moveto(pw(145+ii*6),ph(b1));
-               lineto(pw(145+ii*6),ph(b2));
-               moveto(pw(145+ii*8),ph(b1));
-               lineto(pw(145+ii*8),ph(b2));
-
-            end;
-            b1:=240;
-            b2:=275;
-
-            do_fontt(kanv,'Model',pw(145+ii),ph(b1),7,8,0,5);
-               do_fontt(kanv,name,pw(145+ii),ph(b2),7,8*0.7,0,5);
-            do_fontt(kanv,'Nozzle',pw(145+ii*3),ph(b1),7,8,0,5);
-               do_fontt(kanv,nozzle,pw(145+ii*3),ph(b2),7,8*0.7,0,5);
-            do_fontt(kanv,'Base Pressure',pw(145+ii*5),ph(b1),7,8,0,5);
-               do_fontt(kanv,rtostr_(pres,10,2)+' '+units.press,pw(145+ii*5),ph(b2),7,8*0.7,0,5);
-            do_fontt(kanv,'Throw Radius',pw(145+ii*7),ph(b1),7,8,0,5);
-               do_fontt(kanv,rtostr_(spring[nospring,1],10,2)+' '+units.len,pw(145+ii*7),ph(b2),7,8*0.7,0,5);
-            do_fontt(kanv,'Flow',pw(145+ii*9),ph(b1),7,8,0,5);
-               do_fontt(kanv,rtostr_(flow,10,2)+' '+units.flow,pw(145+ii*9),ph(b2),7,8*0.7,0,5);
-         end
-         else*)
 
             if nuut then                                        //22
                setlimit(pbox1,pbox1.canvas,0,maxl,0,maxp,nuut,55,30,0)
@@ -974,11 +915,6 @@ begin
  // bm.savetofile('c:\junk\test.bmp');
   clipboard.assign(bm);
   bm.free;
-end;
-
-procedure TPlotForm.BitBtn2Click(Sender: TObject);
-begin
-//   mychart.CopyToClipboard(false);
 end;
 
 procedure TPlotForm.BitBtn3Click(Sender: TObject);

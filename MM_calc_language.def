@@ -1,15 +1,535 @@
 @Emitter information
-Emitter info
+información de gotero
 @
 
+@Coefficient of variation  CV (%)
+Coeficiente de variación  CV (%)
+@Maximum allowed pressure (bar).
+Presión máxima admisible (bar)
+@pipeunit
+unidad Tubo 
+@-----
+-----
+@flowunit
+unidad Caudal
+@Calculated flow @
+Caudal calculada 
+@Flow equation coefficient (&x)
+Exponente de Caudal (&x)
+@Flow equation constant &K  (Q=K * P^x)
+Constante de Caudal   &K  (Q=K * P^x)
+@Pipe Diameter
+Diámetro tubo
+@Spacing options
+Distancia entre goteros 
+@Correction % factor (+ -)
+Factor de corrección % (+ -)
+@Kd factor (emitter friction)
+Factor Kd (Rozamiento de gotero )
+@Hazen Williams C value
+Valor C Hazen Williams
+@l/h
+l/h
+@-------
+-------
+@Minimum set @
+Presión mínima  @
+@max_bar_lbl
+max_bar_lbl
+@Label1
+Etiqueta1
+@bar
+bar
+@spacing_unt_lbl
+spacing_unt_lbl
+@Products
+Productos
+@www.IrriMaker.com
+www.IrriMaker.com
+@Calculate
+Calcular
+@The Hazen-Williams roughness factor for the pipe
+Factor de rozamiento Hazen-Williams por el tubo 
+@Header
+Encabezado
+@Footer
+Pie de página
+@Printer
+Impresora
+@Print to Printer
+Enviar a la impresora
+@Printer S&etup
+Configuración de la impresora
+@Excel
+Excel
+@After copying the data, open Excel and then Paste the contents.
+Una vez copiados los datos, abra Excel y copia las notas 
+@Data copied to Clipboard
+datos copiados en las notas        
+@            Copy to ClipBoard
+           Copia en las notas 
+@Output as comma (,) decimal format
+Output coma(,) separador decimal
+@Include Emitter Information
+Incluya información de gotero
+@Plot
+terreno
+@Pressure
+Presión
+@Slope
+Pendiente
+@Show Graphs
+Mostrar gráfico
+@Regular
+Normal
+@EU Limits
+Uniformidad de Emisión
+@Flow Var
+Variación de caudal
+@&Settings
+&Configuración
+@Manage Emitters
+Crear goteros 
+@Manage Pipes
+Crear tubos 
+@Manage Driplines
+Crear tuberia de riego 
+@-
+-
+@Alternate Language
+Idioma alternativo
+@&Units
+&Unidad
+@English
+inglés
+@Metric
+Métrico
+@Flow=l/s
+Caudal=l/s
+@Flow=l/h
+Caudal=l/h
+@&Calculator
+&Calculadora
+@mm
+mm
+@(cm)
+(cm)
+@Pressione
+Presión
+@&Impostazioni
+&Configuración
+@&Manage Emitters
+&Gestionar goteros 
+@M&anage Pipes
+G&estionar tubos
+@Ma&nage Driplines
+Ge&stionar tuberia de riego
+@A&lternatiewe Taal
+A&lternatiewe Taal
+@&Unita
+&Unidad
+@Password
+Contraseña
+@Ok
+Ok
+@Name
+Nombre
+@CV
+CV
+@KD
+KD
+@Max Pressure
+Presión max
+@Min Pressure
+Presión min
+@Constant
+Constante
+@Correction
+corrección
+@Hazen W
+Hazen W
+@limits
+límites
+@Save
+Guarda
+@Delete
+Elimina
+@New
+Nuevo
+@Emitters
+Goteros
+@Pipe
+tubos
+@DripLines
+Tuberia de riego 
+@DripLine Info
+Información de tuberia 
+@Add
+Añadir
+@Diameter (ID)
+Diámetro interior
+@Emitter information
+Información de gotero 
+@DripLine Info
+Información de tuberia 
+@A&lternate Language
+I&dioma alternativo
+@Calculate limits by
+Calcula limite para 
+@Compensated
+autocompensante
+@Results
+Risultado
+@Output
+Exporta datos
+@Losses
+Pérdida de presión
+@Flow=l/m
+Caudal= l/m 
+@DripLine Information
+Información de tuberia 
+@Manage pressure 
+Manejar Presiónes
+@Manage driplines  
+Manejar tuberia de riego 
+@Product Pressures
+Presiónes de producto 
+@Product Pressure Ranges
+Gama Presiónes de producto
+@Enter pressure inrange
+Introducir presión entre gama
+@&Admin
+&Administrador
+@Between 0 and 0.2
+Entre 0 y 0.2
+@l/m
+l/m
+@&Alternate Language
+&Idioma alternativo 
+@Product pressure range
+Gama  presión de producto
+@Enter pressure in range 
+Introducir presión entre gama 
+@Dati copiati sugli Appunti
+Datos copiados en las notas 
+@           Copia sugli Appunti
+           Copia en las notas 
+@Area
+Terreno 
+@Calcola limite per
+Calcula limite para 
+@&Lingua Alternativa
+&Idioma Alternativo
+@Portata = l/m
+Caudal = l/m
+@Etichetta1
+Etiqueta1
+@Nome
+Nombre
+@Pressione max
+Presión  maxima
+@Salva
+Guarda
+@Nuovo
+Nuevo
+@Cancella
+Elimina
+@Gocciolatori
+Goteros
+@tubi
+tubos
+@Ali gocciolanti
+tuberia de riego
+@Info ali gocciolanti
+Info tuberia de riego 
+@Pressioni ala gocciolante
+Presión tuberia de riego   
+@aggiungi
+añadir
+@Emitter information
+Información de goteros 
+@Coefficient of variation  CV (%)
+Coeficiente de variación   CV (%)
+@Maximum allowed pressure (bar).
+Presión máxima admisible (bar).
+@pipeunit
+unidad de tubo 
+@flowunit
+unidad de Caudal 
+@Calculated flow @
+Caudal calculada @
+@Flow equation coefficient (&x)
+Exponente de Caudal (&x)
+@Flow equation constant &K  (Q=K * P^x)
+Constante de Caudal  &K  (Q=K * P^x)
+@Pipe Diameter
+Diámetro tubo
+@Spacing options
+Opciónes de distancia 
+@Correction % factor (+ -)
+Fatcor %  de corrección (+ -)
+@Factor Kd  (emitter friction)
+Kd factor (rozamiento de gotero)
+@Hazen Williams C value
+Valor C de Hazen Williams C 
+@Minimum set @
+Ajusta min @
+@Label1
+Etiqueta1
+@Products
+Productos
+@Product Pressure Ranges
+Gama Presiónes de producto
+@Enter pressure in range
+Introducir presión entre gama 
+@Calculate
+Calculate
+@The Hazen-Williams roughness factor for the pipe
+Factor de aspereza de Hazen-Williams por el tubo
+@Results
+Resultados
+@Output
+Output
+@Header
+Encabezado
+@Footer
+Pie de pagina
+@Printer
+Impresora
+@Print to Printer
+Envia a la Impresora 
+@Printer S&etup
+Configuración I&mpresora 
+@After copying the data, open Excel and then Paste the contents.
+Una vez copiados los datos , abra Excel y luego pegar el contenido
+@Data copied to Clipboard
+Datos copiadods en las notas 
+@            Copy to ClipBoard
+            Copia en las notas 
+@Output as comma (,) decimal format
+Output as coma (,) formato decimal
+@Include Emitter Information
+Incluir información de gotero 
+@Losses
+Perdidas 
+@Plot
+Terreno 
+@Pressure
+Presión
+@Slope
+Pendiente 
+@Calculate limits by
+limites calculados para
+@Show Graphs
+Mostra graphico 
+@Regular
+Normal 
+@Compensated
+Autocompensante 
+@EU Limits
+Limite EU
+@Flow Var
+Variación de caudal
+@&Settings
+&Configuracion 
+@Alternate Language
+Idioma alternativo
+@&Units
+&Unidad
+@English
+Inglès 
+@Metric
+Metrico
+@Flow=l/s
+Caudal=l/s
+@Flow=l/m
+Caudal=l/m
+@Flow=l/h
+Caudal=l/h
+@&Calculator
+&Calculadora
+@&Admin
+&Administrador
+@Emitters
+Goteros 
+@Pipes
+Tubos 
+@DripLines
+Tuberia de riego 
+@DripLine Info
+Informacion tuberia de riego 
+@DripLine Pressures
+Presiónes de tuberia 
+@Add
+Añadir
+@Delete
+Elimina 
+@Save
+Guarda
+@Name
+Nombre
+@Max Pressure
+presión Maxima 
+@New
+Nuevo
+@&Lingua alternativa
+&Idioma alternativo 
+@2.400
+2.400
+@3.478
+3.478
+@2.10 bar
+2.10 bar
+@1.00 bar
+1.00 bar
+@Inner diameter
+diámetro interior 
+@Min Pressure
+Presión min 
+@Constant
+Constante
+@Correction
+corrección
+@limits
+limites
+@Diameter (ID)
+diámetro interior (ID)
+@1.000
+1.000
+@1.008
+1.008
+@2.00 bar
+2.00 bar
+@&English
+&inglès
+@&Metric
+&Metrico
+@&Flow=l/s
+&Caudal=l/s
+@&Flow = l/m
+&Caudal = l/m
+@F&low=l/h
+C&audal=l/h
+@
+
+@
+
+@
+
+@
+
+@
+
+@
+
+@Enter you pressure in range.
+Introducir presión entre gama 
+@Enter you pressure in range.
+Introducir presión entre gama 
+@inch
+Pulgada 
+@gph
+gph
+@psi
+psi
+@(inch)
+(Pulgada)
+@1.300
+1.300
+@1.744
+1.744
+@1.80 bar
+1.80 bar
+@3.800
+3.800
+@Lenghts
+Longitud
+@Label3
+Etiqueta3
+@Spacing
+Distancia 
+@Caption
+Leyenda
+@Distance
+Distancia
+@Copy Chart
+Copia Grafico
+@Copy graph to clipboard
+copia grafico en las notas 
+@Copy Data
+Copia Datos 
+@10
+10
+@15
+15
+@20
+20
+@25
+25
+@50
+50
+@30
+30
+@33
+33
+@40
+40
+@90
+90
+@60
+60
+@75
+75
+@80
+80
+@100
+100
+@Settings
+Configuracion
+@Select  a font for the plots.
+Seleccionar el fuente para los terrenos
+@Current font :
+Fuente actual :
+@Arial
+Arial
+@Greek Text
+Texto 
+@Perdite
+Perdidas
+@1.600
+1.600
+@1.621
+1.621
+@3.00 bar
+3.00 bar
+@Pressione min
+Presiòn min
+@Costante
+Constante
+@Correzione
+Correcciòn
+@Caudal exponent (&x)
+Exponente de Caudal  (&x)
+@Normale
+Normal
+@Compensato
+autocompensante
+@Fattore di scabrezza Hazen-Williams per l'ala
+Facot de rozamiento de Hazen-Williams por el tubo 
+@Between 0.15 and 1
+Entre 0.15 y  1
+@0.800
+0.800
+@150
+150
+@Emitter information
+Emitter information
 @Coefficient of variation  CV (%)
 Coefficient of variation  CV (%)
 @Maximum allowed pressure (bar).
 Maximum allowed pressure (bar).
 @pipeunit
 pipeunit
-@-----
------
 @flowunit
 flowunit
 @Calculated flow @
@@ -28,28 +548,20 @@ Correction % factor (+ -)
 Kd factor (emitter friction)
 @Hazen Williams C value
 Hazen Williams C value
-@l/h
-l/h
-@-------
--------
 @Minimum set @
 Minimum set @
-@max_bar_lbl
-max_bar_lbl
 @Label1
 Label1
-@bar
-bar
-@spacing_unt_lbl
-spacing_unt_lbl
 @Products
 Products
-@www.IrriMaker.com
-www.IrriMaker.com
-@Calculate
-Calculate
+@Product Pressure Ranges
+Product Pressure Ranges
+@Enter you pressure in range.
+Enter you pressure in range.
 @The Hazen-Williams roughness factor for the pipe
 The Hazen-Williams roughness factor for the pipe
+@Results
+Results
 @Header
 Header
 @Footer
@@ -60,8 +572,6 @@ Printer
 Print to Printer
 @Printer S&etup
 Printer S&etup
-@Excel
-Excel
 @After copying the data, open Excel and then Paste the contents.
 After copying the data, open Excel and then Paste the contents.
 @Data copied to Clipboard
@@ -72,30 +582,28 @@ Data copied to Clipboard
 Output as comma (,) decimal format
 @Include Emitter Information
 Include Emitter Information
+@Losses
+Losses
 @Plot
 Plot
 @Pressure
 Pressure
 @Slope
 Slope
+@Calculate limits by
+Calculate limits by
 @Show Graphs
 Show Graphs
 @Regular
 Regular
+@Compensated
+Compensated
 @EU Limits
 EU Limits
 @Flow Var
 Flow Var
 @&Settings
 &Settings
-@Manage Emitters
-Manage Emitters
-@Manage Pipes
-Manage Pipes
-@Manage Driplines
-Manage Driplines
-@-
--
 @Alternate Language
 Alternate Language
 @&Units
@@ -106,56 +614,66 @@ English
 Metric
 @Flow=l/s
 Flow=l/s
+@Flow=l/m
+Flow=l/m
 @Flow=l/h
 Flow=l/h
 @&Calculator
 &Calculator
-@mm
-mm
-@(cm)
-(cm)
-@Pressione
-Pressione
-@&Impostazioni
-&Impostazioni
-@&Manage Emitters
-&Manage Emitters
-@M&anage Pipes
-M&anage Pipes
-@Ma&nage Driplines
-Ma&nage Driplines
-@A&lternatiewe Taal
-A&lternatiewe Taal
-@&Unita
-&Unita
+@&Admin
+&Admin
+@Ca&lculator
+Ca&lculator
+@inch
+inch
+@Caudal calucada en
+Caudal calucada en
+@Distancia entre goteros
+Distancia entre goteros
+@(inch)
+(inch)
+@Factor de rozamiento Hazen-Williams por el tubo
+Factor de rozamiento Hazen-Williams por el tubo
+@Una vez copiados los datos, abra Excel y copia las notas
+Una vez copiados los datos, abra Excel y copia las notas
+@datos copiados en las notas
+datos copiados en las notas
+@           Copia en las notas
+           Copia en las notas
+@Calcula limite para
+Calcula limite para
+@&Idioma alternativo
+&Idioma alternativo
+@&inglés
+&inglés
+@&Métrico
+&Métrico
+@C&audal= l/m
+C&audal= l/m
+@Ca&udal=l/h
+Ca&udal=l/h
+@Caudal calculada
+Caudal calculada
+@Caudal= l/m
+Caudal= l/m
+@0.623
+0.623
+@0.60 bar
+0.60 bar
 @Password
 Password
-@Ok
-Ok
 @Name
 Name
-@CV
-CV
-@KD
-KD
 @Max Pressure
 Max Pressure
-@Min Pressure
-Min Pressure
-@Constant
-Constant
-@Correction
-Correction
-@Hazen W
-Hazen W
-@limits
-limits
+@Diameter (ID)
+Diameter (ID)
 @Save
 Save
-@Delete
-Delete
 @New
 New
+@Delete
+Delete
 @Emitters
 Emitters
 @Pipes
@@ -163,49 +681,55 @@ Pipes
 @DripLines
 DripLines
 @DripLine Info
-DripLine Information
-@Add
-Add
-@Diameter (ID)
-Diameter (ID)
-@Emitter information
-Emitter information
-@DripLine Info
 DripLine Info
-@A&lternate Language
-A&lternate Language
-@Calculate limits by
-Calculatetest
-@Compensated
-Compensated
-@Results
-Restest
-@Output
-Outtest
-@Losses
-Lostest
-@Flow=l/m
-Flow=l/m
-@DripLine Information
-DripLine Information
-@Manage Pressures
-Manage Pressures
 @DripLine Pressures
 DripLine Pressures
-@Product Pressures
-Product Pressures
-@Enter you pressure in range.
-Enter you pressure in range.
-@Product Pressure Ranges
-Product Pressure Ranges
-@Between 0.15 and 1
-Between 0.15 and 1
-@&Admin
-&Admin
-@l/m
-l/m
-@&Alternate Language
-&Alternate Language
+@Add
+Add
+@0.212
+0.212
+@0.297
+0.297
+@29.00 psi
+29.00 psi
+@14.50 psi
+14.50 psi
+@&Caudal= l/m
+&Caudal= l/m
+@Pulgada
+Pulgada
+@Ca&udal= l/m
+Ca&udal= l/m
+@Etiqueta1
+Etiqueta1
+@Contraseña
+Contraseña
+@Goteros
+Goteros
+@Tubos
+Tubos
+@Tuberia de riego
+Tuberia de riego
+@Información de tuberia
+Información de tuberia
+@Presiónes de tuberia
+Presiónes de tuberia
+@Añadir
+Añadir
+@Elimina
+Elimina
+@Guarda
+Guarda
+@Nombre
+Nombre
+@Presión max
+Presión max
+@Nuevo
+Nuevo
+@0.000
+0.000
+@0.00 bar
+0.00 bar
 @Lenghts
 Lenghts
 @Label3
@@ -222,25 +746,101 @@ Copy Chart
 Copy graph to clipboard
 @Copy Data
 Copy Data
-@25
-25
-@15
-15
-@20
-20
-@30
-30
-@40
-40
+@Perdite
+Perdite
 @Settings
 Settings
 @Select a font for the plots.
 Select a font for the plots.
 @Current font :
 Current font :
-@Arial
-Arial
 @Greek Text
 Greek Text
-@Lostest
-Lostest
+@Y1ggggggggggggggggggggg
+Y1ggggggggggggggggggggg
+@Graph for dripline 123ggggggggggggggggggg
+Graph for dripline 123ggggggggggggggggggg
+@cxLabel2hhhhhhhggggggggggggggggg
+cxLabel2hhhhhhhggggggggggggggggg
+@-256206375
+-256206375
+@2.7E+0216
+2.7E+0216
+@-140719707
+-140719707
+@-969331716
+-969331716
+@8.9E+0298
+8.9E+0298
+@-0
+-0
+@2.9E+0151
+2.9E+0151
+@-705237301
+-705237301
+@-456720919
+-456720919
+@-240772597
+-240772597
+@1.1E+0301
+1.1E+0301
+@49
+49
+@66
+66
+@82
+82
+@98
+98
+@108
+108
+@131
+131
+@164
+164
+@197
+197
+@246
+246
+@262
+262
+@295
+295
+@328
+328
+@4
+4
+@6
+6
+@8
+8
+@12
+12
+@13
+13
+@16
+16
+@24
+24
+@31
+31
+@35
+35
+@39
+39
+@41
+41
+@51
+51
+@61
+61
+@76
+76
+@79
+79
+@89
+89
+@99
+99
+@2
+2

@@ -21,7 +21,7 @@ uses
   dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVS2010,
-  dxSkinWhiteprint, dxSkinXmas2008Blue;
+  dxSkinWhiteprint, dxSkinXmas2008Blue, cxStyles;
 
 type
   Tcalcbox = class(TForm)
@@ -123,6 +123,9 @@ type
     Label2: TLabel;
     press_in_range: TEdit;
     Admin1: TMenuItem;
+    slopeR1_eb: TLabeledEdit;
+    slopeR2_eb: TLabeledEdit;
+    cxStyleRepository1: TcxStyleRepository;
     procedure FormActivate(Sender: TObject);
     procedure FormDeactivate(Sender: TObject);
     procedure HlpClick(Sender: TObject);
@@ -152,6 +155,8 @@ type
     procedure ManagePressures1Click(Sender: TObject);
     procedure pressures_cbSelect(Sender: TObject);
     procedure press_in_rangeChange(Sender: TObject);
+    procedure format1Click(Sender: TObject);
+    procedure slopeR1_ebChange(Sender: TObject);
 
   private
     { Private declarations }
@@ -401,6 +406,13 @@ begin
    waarde.writestring('Irricalc','Regspas'+nom,temp);
 end;
 
+procedure Tcalcbox.slopeR1_ebChange(Sender: TObject);
+begin
+
+  // if TLabeledEdit(sender).Text = '' then TLabeledEdit(sender).Text := '0';
+
+end;
+
 procedure Tcalcbox.units_metric_rbClick(Sender: TObject);
 begin
 
@@ -574,6 +586,9 @@ procedure Tcalcbox.FormActivate(Sender: TObject);
 var j : integer;
 begin
 
+   slopeR1_eb.Visible := false;
+   slopeR2_eb.Visible := false;
+
    load_driplines;
    if dripline_lb.Items.Count > 0 then
       dripline_lb.Selected[0] := true;
@@ -610,6 +625,23 @@ begin
    end;
 
    redo_labels;
+
+end;
+
+procedure Tcalcbox.format1Click(Sender: TObject);
+begin
+
+   if format1.ItemIndex = 1 then
+   begin
+      slopeR1_eb.Visible := true;
+      slopeR2_eb.Visible := true;
+   end
+   else
+   begin
+      slopeR1_eb.Visible := false;
+      slopeR2_eb.Visible := false;
+   end;
+
 
 end;
 
@@ -668,7 +700,7 @@ begin
 
    plotform.plot2.cells[no*2,1]:=rtostr(emitspas*100,10,2);
 
-   for j:=1 to 2000 do
+   for j:=1 to 100 do
       begin
          lank:=j*emitspas;
          losses:=(Emit[j].press-p2)/10;
@@ -683,6 +715,8 @@ begin
          else
             plotform.mychart.drawto(lank,losses);
 
+
+
          plotform.plot2.cells[no*2-1,j+2]:=rtostr(lank,10,5);
          plotform.plot2.cells[no*2,j+2]:=rtostr(losses,10,5);
       end;
@@ -692,15 +726,16 @@ begin
     plotform.mychart.Scale1X.RangeHigh := lank;
     plotform.mychart.Scale1Y.RangeHigh := losses;
     plotform.mychart.ShowGraf;
+
 end;
 
 procedure Tcalcbox.calculate_btnClick(Sender: TObject);
 type arr8 = array[0..8] of double;
 
 var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double;
-    f,sl,ee,emitNo,j,emitno2 : integer;
+    f,sl,ee,emitNo,j,emitno2, slopeR1, slopeR2 : integer;
     losses : double;
-    ss,s4 : string;
+    ss,s4, b : string;
     grap,Pc : boolean;
     los1 : array[1..15,1..50] of double;
     ShowIt : boolean;
@@ -708,6 +743,8 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
     e1 : integer;
     FillLength : double;
     Prange : Arr8;
+    str : string;
+
 
     procedure qsort(a,b: integer);
     var svalue,temp    : double;
@@ -900,10 +937,37 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
       end;   }
    end
    else
+
+
    if commas then
-      memo1.lines.add('       Slope > ;  3%  ;   2%  ;  1%  ;  0%  ;  -1%   ; -2%  ; -3% ; Time to Fill @ 0% slope ')
+   begin
+      str := '       Slope > ;  ';
+
+        for x := slopeR1 to slopeR2  do
+        begin
+           str := str + inttostr(x) + '% ; ';
+        end;
+
+   end
    else
-      memo1.lines.add('       Slope >    3      2      1      0     -1     -2    -3%            Time to Fill @ 0% slope ');
+   begin
+      str := '       Slope >    ';
+        for x := slopeR1 to slopeR2  do
+        begin
+           str := str + inttostr(x) + '      ';
+        end;
+   end;
+   str := str + 'Time to Fill @ 0% slope';
+
+
+   //'       Slope > ;  3%  ;   2%  ;  1%  ;  0%  ;  -1%   ; -2%  ; -3% ; Time to Fill @ 0% slope '
+   // '       Slope >    3      2      1      0     -1     -2    -3%            Time to Fill @ 0% slope '
+
+   if commas then
+      memo1.lines.add(str)
+   else
+      memo1.lines.add(str);
+
 
 
          if compensate_type.itemindex = 0 then
@@ -953,10 +1017,10 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
           result := true;
         end;
 
-        if (strtor(press_in_range.Text) < strtor(selected_emitter.min_press)) or
-           (strtor(press_in_range.Text) > strtor(selected_pressure.max_press)) then
+        if (units.press_si(strtor(press_in_range.Text)) < strtor(selected_emitter.min_press)) or
+           (units.press_si(strtor(press_in_range.Text)) > strtor(selected_pressure.max_press)) then
         begin
-          ShowMessage('Please enter a pressure within the selected Range ' + selected_emitter.min_press + ' and ' + selected_pressure.max_press);
+          ShowMessage('Please enter a pressure within the selected Range ' + rtostr(units.si_press(strtor(selected_emitter.min_press)),10,2) + ' and ' + rtostr(units.si_press(strtor(selected_pressure.max_press)),10,2));
           result := true;
         end;
 
@@ -1067,7 +1131,8 @@ var p1,p2,pf,maxlos,emitval,emitSpas,diam,k,x,EUCv,EUMin,CorFacV,kdfacV : double
                 if (j*emitspas<=L1) and ((j+1)*EmitSpas>L1) then
                 begin
                    i:=trunc(l1/25);
-                   los1[reg,I]:=(Emit[j].press-p2)/10;
+                   //los1[reg,I]:=(Emit[j].press-p2)/10;
+                   los1[reg,I]:=units.si_press((Emit[j].press-p2)/10);
                 end;
              l1:=l1+25;
           until l1>800;
@@ -1150,6 +1215,16 @@ begin
    memo4.clear;
    memo1.clear;
 
+   if slopeR1_eb.Text = '' then slopeR1_eb.Text:= '';
+   if slopeR2_eb.Text = '' then slopeR2_eb.Text:= '0';
+
+   slopeR1 := strtoint(slopeR1_eb.Text);
+   slopeR2 := strtoint(slopeR2_eb.Text);
+
+   if slopeR1 > 0 then slopeR1 := 0;
+   if slopeR2 < 0 then slopeR2:= 0;
+
+
    if (pre_checks) then exit;
    setup_header;
 
@@ -1171,7 +1246,7 @@ begin
 
          // Slope
          else
-            for sl:=-3 to 3 do
+            for sl:= slopeR1 to slopeR2 do
             begin
                ddd:=units.si_len(getLength2(sl,emitspas,ee));
                ss:=ss+r_s(ddd,6,0)+comma1;// + '('+r_s(slope_press,2,0)+')';
@@ -1182,6 +1257,7 @@ begin
                   plotform.dchart.Scale1Y.RangeHigh := ddd+30;
                   PlotForm.dChart.fillcolor:=plotform.ccolor(ee);
                   plotform.dChart.bar3D (emitspas*100-2.5,0,emitspas*100+2.5,ddd,5,45);
+
 
                   with plotform.plot1 do
                   begin
@@ -1202,8 +1278,26 @@ begin
                   end;
                end;
             end;
+            case ee of
+            1 : b := regspasd1.Text;
+            2 : b := regspasd2.Text;
+            3 : b := regspasd3.Text;
+            4 : b := regspasd4.Text;
+            5 : b := regspasd5.Text;
+            6 : b := regspasd6.Text;
+            7 : b := regspasd7.Text;
+            8 : b := regspasd8.Text;
+            9 : b := regspasd9.Text;
+            10 : b := regspasd10.Text;
+            11 : b := regspasd11.Text;
+            12 : b := regspasd12.Text;
+            13 : b := regspasd13.Text;
+            14 : b := regspasd14.Text;
+            15 : b := regspasd15.Text;
+            end;
+            //r_s(units.si_space(emitspas)*100,10,1)
 
-         memo1.lines.add(r_s(units.si_space(emitspas)*100,7,2) +comma1+'      '+ss + '           ' +FillSeconds(FillLength,EmitSpas)+' Seconds');
+         memo1.lines.add(b + comma1+'      '+ss + '           ' +FillSeconds(FillLength,EmitSpas)+' Seconds');
 
       end;
    end;
@@ -1266,23 +1360,51 @@ begin
                ss:=ss+r_s(units.si_len(getLength2(0,emitspas,ee)),6,0)+comma1;
             end;
 
-            if not pc then memo1.lines.add(r_s(units.si_space(emitspas*100),10,2)+comma1+'      '+ss);
+            case ee of
+            1 : b := regspasd1.Text;
+            2 : b := regspasd2.Text;
+            3 : b := regspasd3.Text;
+            4 : b := regspasd4.Text;
+            5 : b := regspasd5.Text;
+            6 : b := regspasd6.Text;
+            7 : b := regspasd7.Text;
+            8 : b := regspasd8.Text;
+            9 : b := regspasd9.Text;
+            10 : b := regspasd10.Text;
+            11 : b := regspasd11.Text;
+            12 : b := regspasd12.Text;
+            13 : b := regspasd13.Text;
+            14 : b := regspasd14.Text;
+            15 : b := regspasd15.Text;
+            end;
+            //r_s(units.si_space(emitspas*100),10,1)
+            if not pc then memo1.lines.add(b+comma1+'      '+ss);
       end;
    end;
 
    // Losses Display
-   ss:='Spacing (cm) ';
+  // ss:='Spacing (cm) ';
+
+      if units.uu = 1 then
+         ss:='Spacing (cm) '
+      else
+         ss:='Spacing (inch) ';
+
    for ee:=1 to 15 do
    begin
-      s4 := get_reg_spas(ee);
+      s4 := rtostr(units.si_len(strtor(get_reg_spas(ee))), 10,2);
       ss:=ss+comma1+' '+s_s(s4,6);
    end;
    memo4.lines.add(ss);
-   memo4.lines.add('Length (m)');
+
+      if units.uu = 1 then
+         memo4.lines.add('Length (m)')
+      else
+         memo4.lines.add('Length (ft)');
 
    for sl:=1 to 50 do
    begin
-      ss:=s_s(rtostr(sl*25,10,0),5)+'       ';
+      ss:=s_s(rtostr(units.si_len(sl*25),10,0),5)+'       ';
       showit:=false;
       for ee:=1 to 15 do
       begin
@@ -1692,7 +1814,8 @@ end;
 
 procedure Tcalcbox.press_in_rangeChange(Sender: TObject);
 begin
-   maxp.text := rtostr(main_unt.units.si_press(strtor(press_in_range.Text)),10,2);
+   //maxp.text := rtostr(main_unt.units.si_press(strtor(press_in_range.Text)),10,2);
+   maxp.text := rtostr(strtor(press_in_range.Text),10,2);
 end;
 
 procedure Tcalcbox.psetupClick(Sender: TObject);
